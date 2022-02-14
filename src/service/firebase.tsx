@@ -1,4 +1,5 @@
-import { FirebaseOptions, initializeApp } from 'firebase/app';
+import { FirebaseError, FirebaseOptions, initializeApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 // import { getStorage } from 'firebase/storage';
 // import { getDatabase} from 'firebase/database';
 
@@ -15,10 +16,38 @@ const firebaseConfig: FirebaseOptions = {
 };
 
 // Initialize Firebase
-export const FirebaseApp = initializeApp(firebaseConfig);
-// export const auth = getAuth(app);
+const firebaseApp = initializeApp(firebaseConfig);
+const googleProvider = new GoogleAuthProvider();
+export const firebaseAuth = getAuth(firebaseApp);
 // export const storage = getStorage(app);
-// export const database = getDatabase(app) 
+// export const database = getDatabase(app)
+
+/**
+ * Googleログイン
+ */
+export const signInWithGoogle = () => {
+  signInWithPopup(firebaseAuth, googleProvider)
+    .then((res) => {
+      console.log(res.user);
+    })
+    .catch((error: FirebaseError) => {
+      console.log(error.message);
+    });
+};
+
+/**
+ * ログアウト
+ */
+export const logout = () => {
+  signOut(firebaseAuth)
+    .then(() => {
+      console.log('logged out');
+      document.location.reload();
+    })
+    .catch((error: FirebaseError) => {
+      console.log(error.message);
+    });
+};
 
 // // 認証の永続性: session
 // // 現在のセッションまたはタブでのみ状態が維持され、ユーザーが認証を受けたタブやウィンドウを閉じるとクリアされることを示します。
