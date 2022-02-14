@@ -1,5 +1,5 @@
 import { FirebaseError, FirebaseOptions, initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 // import { getStorage } from 'firebase/storage';
 // import { getDatabase} from 'firebase/database';
 
@@ -29,6 +29,20 @@ export const signInWithGoogle = () => {
   signInWithPopup(firebaseAuth, googleProvider)
     .then((res) => {
       console.log(res.user);
+    })
+    .catch((error: FirebaseError) => {
+      console.log(error.message);
+    });
+};
+
+/**
+ * ログアウト
+ */
+export const logout = () => {
+  signOut(firebaseAuth)
+    .then(() => {
+      console.log('logged out');
+      document.location.reload();
     })
     .catch((error: FirebaseError) => {
       console.log(error.message);
