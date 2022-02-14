@@ -1,21 +1,14 @@
-import {FC, useContext} from 'react'
-import { AuthContext } from '../providers/AuthProvider';
-import { signInWithGoogle } from '../service/firebase';
+import { FC, memo } from 'react';
 
-//Propsの型定義
-type PropsType = {
-  
-}
+import HeaderButton from './Elements/HeaderButton';
 
-const Header: FC<PropsType> = () => {
-  const currentUser = useContext(AuthContext)
-  console.log(currentUser);
+const Header: FC = memo(() => {
   return (
     <header>
       ヘッダー
-      <button onClick={signInWithGoogle}>ログイン</button>
+      <HeaderButton />
     </header>
-  ); 
-}
+  );
+});
 
-export default Header
+export default Header;
