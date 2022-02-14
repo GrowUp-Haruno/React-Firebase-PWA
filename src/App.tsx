@@ -1,12 +1,11 @@
-import './App.css';
-import { FirebaseApp } from './service/firebase';
 import Header from './components/Header';
+import AuthProvider from './providers/AuthProvider';
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
       <Header />
-    </div>
+    </AuthProvider>
   );
 }
 
