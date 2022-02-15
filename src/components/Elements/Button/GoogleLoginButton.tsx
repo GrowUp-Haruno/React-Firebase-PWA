@@ -1,5 +1,6 @@
 import { FC, memo } from 'react';
-import { signInWithGoogle } from '../../../service/firebase';
+
+import { signInWithGoogle } from '../../../service/firebaseAuthentication';
 import PrimaryButton from '../../Atoms/Button/PrimaryButton';
 
 const GoogleLoginButton: FC = memo(() => {
