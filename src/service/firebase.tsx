@@ -1,5 +1,6 @@
-import { FirebaseError, FirebaseOptions, initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { FirebaseOptions, initializeApp } from 'firebase/app';
+import { browserSessionPersistence, getAuth, setPersistence } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 // import { getStorage } from 'firebase/storage';
 // import { getDatabase} from 'firebase/database';
 
@@ -17,41 +18,14 @@ const firebaseConfig: FirebaseOptions = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-const googleProvider = new GoogleAuthProvider();
 export const firebaseAuth = getAuth(firebaseApp);
+export const firebaseFirestore = getFirestore(firebaseApp);
 // export const storage = getStorage(app);
 // export const database = getDatabase(app)
 
-/**
- * Googleログイン
- */
-export const signInWithGoogle = () => {
-  signInWithPopup(firebaseAuth, googleProvider)
-    .then((res) => {
-      console.log(res.user);
-    })
-    .catch((error: FirebaseError) => {
-      console.log(error.message);
-    });
-};
-
-/**
- * ログアウト
- */
-export const logout = () => {
-  signOut(firebaseAuth)
-    .then(() => {
-      console.log('logged out');
-      document.location.reload();
-    })
-    .catch((error: FirebaseError) => {
-      console.log(error.message);
-    });
-};
-
 // // 認証の永続性: session
 // // 現在のセッションまたはタブでのみ状態が維持され、ユーザーが認証を受けたタブやウィンドウを閉じるとクリアされることを示します。
-// setPersistence(auth, browserSessionPersistence);
+setPersistence(firebaseAuth, browserSessionPersistence);
 
 // export const avatarStorageUrl =
 //   'https://firebasestorage.googleapis.com/v0/b/react-auth-74a37.appspot.com/o/avatar%2F';
