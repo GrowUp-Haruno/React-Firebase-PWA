@@ -6,7 +6,7 @@ import ToDoForm from '../Elements/Form/ToDoForm';
 
 const DashboardSwitcher: FC = () => {
   const currentUser = useContext(AuthContext);
-  return <>{currentUser ? <GoogleLoginButton /> : <ToDoForm />}</>;
+  return <>{!currentUser ? <GoogleLoginButton /> : <ToDoForm />}</>;
 };
 
 export default DashboardSwitcher;

@@ -6,7 +6,7 @@ import LogoutButton from '../Elements/Button/LogoutButton';
 
 const HeaderButton: FC = memo(() => {
   const currentUser = useContext(AuthContext);
-  return <>{currentUser ? <LogoutButton /> : <GoogleLoginButton />}</>;
+  return <>{!currentUser ? <GoogleLoginButton /> : <LogoutButton />}</>;
 });
 
 export default HeaderButton;
