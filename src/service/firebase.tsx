@@ -1,4 +1,6 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app';
+import { browserSessionPersistence, getAuth, setPersistence } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 // import { getStorage } from 'firebase/storage';
 // import { getDatabase} from 'firebase/database';
 
@@ -15,14 +17,15 @@ const firebaseConfig: FirebaseOptions = {
 };
 
 // Initialize Firebase
-export const FirebaseApp = initializeApp(firebaseConfig);
-// export const auth = getAuth(app);
+const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseAuth = getAuth(firebaseApp);
+export const firebaseFirestore = getFirestore(firebaseApp);
 // export const storage = getStorage(app);
-// export const database = getDatabase(app) 
+// export const database = getDatabase(app)
 
 // // 認証の永続性: session
 // // 現在のセッションまたはタブでのみ状態が維持され、ユーザーが認証を受けたタブやウィンドウを閉じるとクリアされることを示します。
-// setPersistence(auth, browserSessionPersistence);
+setPersistence(firebaseAuth, browserSessionPersistence);
 
 // export const avatarStorageUrl =
 //   'https://firebasestorage.googleapis.com/v0/b/react-auth-74a37.appspot.com/o/avatar%2F';
