@@ -1,34 +1,36 @@
-import { addDoc, collection, Timestamp } from "firebase/firestore";
-import { ChangeEventHandler, FormEventHandler, useContext, useState } from "react";
-import { AuthContext } from "../providers/AuthProvider";
-import { firebaseFirestore } from "./firebase";
+import {
+  addDoc,
+  collection,
+  CollectionReference,
+  DocumentData,
+  getDocs,
+  orderBy,
+  query,
+} from 'firebase/firestore';
+import { todoDataType } from '../models/todoDataType';
+import { currentUserTyep } from '../types/currentUserTyep';
+import { firebaseFirestore } from './firebase';
 
+/**
+ * Firestore: todoのデータ書込む
+ */
+export const updateTodo = async (currentUser: currentUserTyep, todoData: todoDataType) => {
+  if (currentUser) {
+    await addDoc(collection(firebaseFirestore, `users/${currentUser.uid}/todos`), todoData);
+  }
+};
 
-export const useFirestore = () => {
-    const currentUser = useContext(AuthContext);
-    const [inputValue, setInputValue] = useState<string>('');
-    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-      setInputValue(event.target.value);
-    };
-
-    const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-      try {
-        // リロード抑制
-        event.preventDefault();
-
-        if (currentUser) {
-          await addDoc(collection(firebaseFirestore, `users/${currentUser.uid}/todos`), {
-            content: inputValue,
-            createdAt: Timestamp.now(),
-            isComplete: false,
-          });
-          // 書き込み完了後入力内容を削除
-          setInputValue('');
-        }
-      } catch (e) {
-        console.error('Error adding document: ', e);
-      }
-    };
-  
-  return { inputValue, handleChange, handleSubmit };
-}
+/**
+ * Firestore: todoのデータを読込む
+ */
+export const fetchTodo = async (currentUser: currentUserTyep) => {
+  if (currentUser) {
+    const todoRef: CollectionReference<todoDataType | DocumentData> = collection(
+      firebaseFirestore,
+      `users/${currentUser.uid}/todos`
+    );
+    const todoQuery = query(todoRef, orderBy('createdAt', 'desc'));
+    const snapshot = await getDocs(todoQuery);
+    return snapshot.docs.map((doc) => doc.data());
+  }
+};
