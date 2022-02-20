@@ -1,6 +1,5 @@
-import { DocumentData } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
-import { todoDataType } from '../../../models/todoDataType';
+import { todoDataGetType } from '../../../models/todoGetDataType';
 import { AuthContext } from '../../../providers/AuthProvider';
 import { fetchTodo } from '../../../service/firebaseFirestore';
 
@@ -10,8 +9,9 @@ import { fetchTodo } from '../../../service/firebaseFirestore';
  */
 export const useTodo = () => {
   const currentUser = useContext(AuthContext);
-  const [todos, setTodos] = useState<(DocumentData | todoDataType)[] | undefined>([]);
+  const [todos, setTodos] = useState<Array<todoDataGetType> | undefined>([]);
 
+  // todoの初回読み込み
   useEffect(() => {
     (async () => {
       setTodos(await fetchTodo(currentUser));

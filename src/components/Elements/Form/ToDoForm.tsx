@@ -1,13 +1,12 @@
-import { DocumentData } from 'firebase/firestore';
 import { Dispatch, FC, memo } from 'react';
-import { todoDataType } from '../../../models/todoDataType';
+import { todoDataGetType } from '../../../models/todoGetDataType';
 
 import PrimaryButton from '../../Atoms/Button/PrimaryButton';
 import PrimaryInputText from '../../Atoms/Input/PrimaryInputText';
 import { useTodoForm } from './hooks/useTodoForm';
 
 type propsType = {
-  setTodos: Dispatch<React.SetStateAction<(DocumentData | todoDataType)[] | undefined>>;
+  setTodos: Dispatch<React.SetStateAction<todoDataGetType[] | undefined>>;
 };
 
 const ToDoForm: FC<propsType> = memo(({ setTodos }) => {

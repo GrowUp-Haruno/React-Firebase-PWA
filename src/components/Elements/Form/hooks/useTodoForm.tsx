@@ -1,4 +1,4 @@
-import { DocumentData, Timestamp } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 import {
   ChangeEventHandler,
   Dispatch,
@@ -8,11 +8,12 @@ import {
   useState,
 } from 'react';
 import { todoDataType } from '../../../../models/todoDataType';
+import { todoDataGetType } from '../../../../models/todoGetDataType';
 import { AuthContext } from '../../../../providers/AuthProvider';
-import { fetchTodo, updateTodo } from '../../../../service/firebaseFirestore';
+import { fetchTodo, addTodo } from '../../../../service/firebaseFirestore';
 
 export const useTodoForm = (
-  setTodos: Dispatch<React.SetStateAction<(DocumentData | todoDataType)[] | undefined>>
+  setTodos: Dispatch<React.SetStateAction<todoDataGetType[] | undefined>>
 ) => {
   const currentUser = useContext(AuthContext);
   const [inputValue, setInputValue] = useState<string>('');
@@ -32,8 +33,9 @@ export const useTodoForm = (
           createdAt: Timestamp.now(),
           isComplete: false,
         };
+        
         // Todo更新
-        await updateTodo(currentUser, todoData);
+        await addTodo(currentUser, todoData);
 
         // Todoを再取得
         setTodos(await fetchTodo(currentUser));

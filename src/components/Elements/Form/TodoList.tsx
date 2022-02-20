@@ -1,14 +1,32 @@
-import { DocumentData } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 import { FC } from 'react';
-import { todoDataType } from '../../../models/todoDataType';
 
 type propsType = {
-  todos: (DocumentData | todoDataType)[] | undefined;
+  todos:
+    | Array<{
+        task: string;
+        createdAt: Timestamp;
+        isComplete: boolean;
+        id: string;
+      }>
+    | undefined;
 };
 
 const TodoList: FC<propsType> = ({ todos }) => {
-  console.log(todos);
-  return <div></div>;
+  const list =
+    todos &&
+    todos.map((todo) => (
+      <ul key={todo.id}>
+        <input type="checkbox" checked={todo.isComplete} onChange={() => {}} />
+        <span>{todo.task}</span>
+      </ul>
+    ));
+
+  return (
+    <div>
+      <li>{list}</li>
+    </div>
+  );
 };
 
 export default TodoList;
