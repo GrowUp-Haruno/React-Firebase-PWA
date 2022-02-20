@@ -5,7 +5,6 @@ import HeaderButton from './Modules/HeaderButton';
 const Header: FC = memo(() => {
   return (
     <header>
-      ヘッダー
       <HeaderButton />
     </header>
   );
