@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   CollectionReference,
+  doc,
   DocumentData,
   getDocs,
   orderBy,
@@ -24,11 +25,12 @@ export const addTodo = async (currentUser: currentUserTyep, todoData: todoDataTy
 /**
  * Firestore: todoのデータ書込む
  */
-export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
-  if (currentUser) {
-    await addDoc(collection(firebaseFirestore, `users/${currentUser.uid}/todos`), todoGetData);
-  }
-};
+// export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
+//   if (currentUser) {
+//     const todoRef = doc(firebaseFirestore, `users/${currentUser.uid}/todos`, todoGetData.id);
+//     await addDoc(todoRef, );
+//   }
+// };
 
 /**
  * Firestore: todoのデータを読込む
