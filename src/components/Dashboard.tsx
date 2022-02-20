@@ -1,13 +1,12 @@
 import { FC, memo } from 'react';
-import DashboardSwitcher from './Modules/DashboardSwitcher';
+import Todo from './Modules/Todo';
 
 const Dashboard: FC = memo(() => {
   return (
     <div>
-      <DashboardSwitcher />
+      <Todo />
     </div>
   );
 });
 
-Dashboard.displayName = 'Dashboard';
 export default Dashboard;

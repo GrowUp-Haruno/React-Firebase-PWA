@@ -1,16 +1,17 @@
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User } from '@firebase/auth';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from '@firebase/auth';
 import { FirebaseError } from '@firebase/util';
 import { useEffect, useState } from 'react';
+import { currentUserTyep } from '../types/currentUserTyep';
 import { firebaseAuth } from './firebase';
 
 /**
- * オブザーバからログインユーザを検知して情報を取得する
+ * ユーザー情報を取得する
  */
 export const useAuthentication = () => {
-  const [currentUser, setCurrentUser] = useState<User>();
+  const [currentUser, setCurrentUser] = useState<currentUserTyep>();
 
   useEffect(() => {
-    const Unsubscribe = onAuthStateChanged(firebaseAuth, (user) => user && setCurrentUser(user));
+    const Unsubscribe = onAuthStateChanged(firebaseAuth, (user) => setCurrentUser(user));
 
     return () => {
       Unsubscribe();

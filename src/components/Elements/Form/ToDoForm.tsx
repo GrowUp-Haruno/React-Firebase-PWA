@@ -1,11 +1,16 @@
-import { FC, memo } from 'react';
+import { Dispatch, FC, memo } from 'react';
 
-import { useFirestore } from '../../../service/firebaseFirestore';
+import { todoGetDataType } from '../../../models/todoGetDataType';
 import PrimaryButton from '../../Atoms/Button/PrimaryButton';
 import PrimaryInputText from '../../Atoms/Input/PrimaryInputText';
+import { useTodoForm } from './hooks/useTodoForm';
 
-const ToDoForm: FC = memo(() => {
-  const { inputValue, handleChange, handleSubmit } = useFirestore();
+type propsType = {
+  setTodos: Dispatch<React.SetStateAction<todoGetDataType[] | undefined>>;
+};
+
+const ToDoForm: FC<propsType> = memo(({ setTodos }) => {
+  const { inputValue, handleChange, handleSubmit } = useTodoForm(setTodos);
 
   return (
     <form onSubmit={handleSubmit}>
