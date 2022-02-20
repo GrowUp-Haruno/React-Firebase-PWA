@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase/firestore';
 
-export type todoDataGetType = {
+export type todoGetDataType = {
   id: string;
   task: string;
   createdAt: Timestamp;

@@ -8,12 +8,12 @@ import {
   useState,
 } from 'react';
 import { todoDataType } from '../../../../models/todoDataType';
-import { todoDataGetType } from '../../../../models/todoGetDataType';
+import { todoGetDataType } from '../../../../models/todoGetDataType';
 import { AuthContext } from '../../../../providers/AuthProvider';
 import { fetchTodo, addTodo } from '../../../../service/firebaseFirestore';
 
 export const useTodoForm = (
-  setTodos: Dispatch<React.SetStateAction<todoDataGetType[] | undefined>>
+  setTodos: Dispatch<React.SetStateAction<todoGetDataType[] | undefined>>
 ) => {
   const currentUser = useContext(AuthContext);
   const [inputValue, setInputValue] = useState<string>('');

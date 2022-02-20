@@ -8,7 +8,7 @@ import {
   query,
 } from 'firebase/firestore';
 import { todoDataType } from '../models/todoDataType';
-import { todoDataGetType } from '../models/todoGetDataType';
+import { todoGetDataType } from '../models/todoGetDataType';
 import { currentUserTyep } from '../types/currentUserTyep';
 import { firebaseFirestore } from './firebase';
 
@@ -18,6 +18,15 @@ import { firebaseFirestore } from './firebase';
 export const addTodo = async (currentUser: currentUserTyep, todoData: todoDataType) => {
   if (currentUser) {
     await addDoc(collection(firebaseFirestore, `users/${currentUser.uid}/todos`), todoData);
+  }
+};
+
+/**
+ * Firestore: todoのデータ書込む
+ */
+export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
+  if (currentUser) {
+    await addDoc(collection(firebaseFirestore, `users/${currentUser.uid}/todos`), todoGetData);
   }
 };
 
@@ -33,7 +42,7 @@ export const fetchTodo = async (currentUser: currentUserTyep) => {
     const todoQuery = query(todoRef, orderBy('createdAt', 'desc'));
     const snapshot = await getDocs(todoQuery);
 
-    return snapshot.docs.map<todoDataGetType>((doc) => ({
+    return snapshot.docs.map<todoGetDataType>((doc) => ({
       task: doc.data().task,
       createdAt: doc.data().createdAt,
       isComplete: doc.data().isComplete,
