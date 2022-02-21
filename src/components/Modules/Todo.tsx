@@ -11,7 +11,7 @@ const Todo: FC = () => {
     <>
       {currentUser && (
         <>
-          <ToDoForm setTodos={setTodos} />
+          <ToDoForm todos={todos} setTodos={setTodos} />
           <TodoList todos={todos} />
         </>
       )}
