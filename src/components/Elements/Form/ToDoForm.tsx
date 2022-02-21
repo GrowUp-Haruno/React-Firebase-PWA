@@ -6,11 +6,12 @@ import PrimaryInputText from '../../Atoms/Input/PrimaryInputText';
 import { useTodoForm } from './hooks/useTodoForm';
 
 type propsType = {
+  todos: todoGetDataType[] | undefined;
   setTodos: Dispatch<React.SetStateAction<todoGetDataType[] | undefined>>;
 };
 
-const ToDoForm: FC<propsType> = memo(({ setTodos }) => {
-  const { inputValue, handleChange, handleSubmit } = useTodoForm(setTodos);
+const ToDoForm: FC<propsType> = memo(({ todos, setTodos }) => {
+  const { inputValue, handleChange, handleSubmit } = useTodoForm(todos, setTodos);
 
   return (
     <form onSubmit={handleSubmit}>
