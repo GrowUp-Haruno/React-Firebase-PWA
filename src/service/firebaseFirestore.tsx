@@ -7,6 +7,7 @@ import {
   getDocs,
   orderBy,
   query,
+  updateDoc,
 } from 'firebase/firestore';
 import { todoDataType } from '../models/todoDataType';
 import { todoGetDataType } from '../models/todoGetDataType';
@@ -23,14 +24,15 @@ export const addTodo = async (currentUser: currentUserTyep, todoData: todoDataTy
 };
 
 /**
- * Firestore: todoのデータ書込む
+ * Firestore: todoのデータ更新
  */
-// export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
-//   if (currentUser) {
-//     const todoRef = doc(firebaseFirestore, `users/${currentUser.uid}/todos`, todoGetData.id);
-//     await addDoc(todoRef, );
-//   }
-// };
+export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
+  if (currentUser) {
+    const todoRef = doc(firebaseFirestore, `users/${currentUser.uid}/todos`, todoGetData.id);
+    const todoData: todoDataType = {...todoGetData}
+    await updateDoc(todoRef, todoData);
+  }
+};
 
 /**
  * Firestore: todoのデータを読込む
