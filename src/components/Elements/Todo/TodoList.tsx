@@ -1,14 +1,13 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { FC } from 'react';
 
 import { todoGetDataType } from '../../../models/todoGetDataType';
 
 type propsType = {
   todos: todoGetDataType[] | undefined;
-  setTodos: Dispatch<SetStateAction<todoGetDataType[] | undefined>>;
-  setUpdateFlag: Dispatch<SetStateAction<boolean>>;
+  isCmpleteChangeHandler: (index: number) => void;
 };
 
-const TodoList: FC<propsType> = ({ todos, setTodos, setUpdateFlag }) => {
+const TodoList: FC<propsType> = ({ todos, isCmpleteChangeHandler }) => {
   const list =
     todos &&
     todos.map((todo, index) => (
@@ -17,11 +16,7 @@ const TodoList: FC<propsType> = ({ todos, setTodos, setUpdateFlag }) => {
           type="checkbox"
           checked={todo.isComplete}
           onChange={() => {
-            setTodos(
-              todos.map((todo, i) =>
-                i === index ? { ...todo, isComplete: !todo.isComplete } : { ...todo }
-              )
-            );
+            isCmpleteChangeHandler(index);
           }}
         />
         <span>{todo.task}</span>

@@ -12,6 +12,18 @@ export const useTodo = () => {
   const [todos, setTodos] = useState<Array<todoGetDataType> | undefined>([]);
   const [updateFlag, setUpdateFlag] = useState<boolean>(false);
 
+  // isCmpleteの論理を反転
+  const isCmpleteChangeHandler = (index: number) => {
+    if (todos) {
+      setTodos(
+        todos.map((todo, i) =>
+          i === index ? { ...todo, isComplete: !todo.isComplete } : { ...todo }
+        )
+      );
+      setUpdateFlag(true);
+    }
+  };
+
   // todoの初回読み込み
   useEffect(() => {
     (async () => {
@@ -23,5 +35,5 @@ export const useTodo = () => {
     };
   }, [currentUser]);
 
-  return { currentUser, todos, updateFlag, setTodos, setUpdateFlag };
+  return { currentUser, todos, updateFlag, setTodos, setUpdateFlag, isCmpleteChangeHandler };
 };

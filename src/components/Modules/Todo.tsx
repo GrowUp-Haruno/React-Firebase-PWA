@@ -6,14 +6,15 @@ import TodoUpdate from '../Elements/Todo/TodoUpdate';
 import { useTodo } from './hooks/useTodo';
 
 const Todo: FC = () => {
-  const { currentUser, todos, updateFlag, setTodos, setUpdateFlag } = useTodo();
+  const { currentUser, todos, updateFlag, setTodos, setUpdateFlag, isCmpleteChangeHandler } =
+    useTodo();
 
   return (
     <>
       {currentUser && (
         <>
           <ToDoForm todos={todos} setTodos={setTodos} setUpdateFlag={setUpdateFlag} />
-          <TodoList todos={todos} setTodos={setTodos} setUpdateFlag={setUpdateFlag} />
+          <TodoList todos={todos} isCmpleteChangeHandler={isCmpleteChangeHandler} />
           <TodoUpdate updateFlag={updateFlag} />
         </>
       )}
