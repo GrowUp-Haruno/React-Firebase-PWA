@@ -1,4 +1,4 @@
-import { Dispatch, FC, memo } from 'react';
+import { Dispatch, FC, memo, SetStateAction } from 'react';
 
 import { todoGetDataType } from '../../../models/todoGetDataType';
 import PrimaryButton from '../../Atoms/Button/PrimaryButton';
@@ -7,11 +7,12 @@ import { useTodoForm } from './hooks/useTodoForm';
 
 type propsType = {
   todos: todoGetDataType[] | undefined;
-  setTodos: Dispatch<React.SetStateAction<todoGetDataType[] | undefined>>;
+  setTodos: Dispatch<SetStateAction<todoGetDataType[] | undefined>>;
+  setUpdateFlag: Dispatch<SetStateAction<boolean>>;
 };
 
-const ToDoForm: FC<propsType> = memo(({ todos, setTodos }) => {
-  const { inputValue, handleChange, handleSubmit } = useTodoForm(todos, setTodos);
+const ToDoForm: FC<propsType> = memo(({ todos, setTodos, setUpdateFlag }) => {
+  const { inputValue, handleChange, handleSubmit } = useTodoForm(todos, setTodos, setUpdateFlag);
 
   return (
     <form onSubmit={handleSubmit}>
