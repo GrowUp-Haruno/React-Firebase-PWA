@@ -1,15 +1,14 @@
-import {FC} from 'react'
+import { FC } from 'react';
+import PrimaryButton from '../../Atoms/Button/PrimaryButton';
 
 //Propsの型定義
 type PropsType = {
-  updateFlag: boolean
-}
+  updateFlag: boolean;
+};
 
-const TodoUpdate: FC<PropsType> = ({ updateFlag}) => {
-  return (
-    <>  </>
-  ) 
-}
+const TodoUpdate: FC<PropsType> = ({ updateFlag }) => {
+  return <div> {updateFlag && <PrimaryButton>保存</PrimaryButton>}</div>;
+};
 
-TodoUpdate.displayName = 'TodoUpdate'
-export default TodoUpdate
+TodoUpdate.displayName = 'TodoUpdate';
+export default TodoUpdate;
