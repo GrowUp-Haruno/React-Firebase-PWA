@@ -3,6 +3,7 @@ import {
   ChangeEventHandler,
   Dispatch,
   FormEventHandler,
+  SetStateAction,
   useCallback,
   useState,
 } from 'react';
@@ -11,7 +12,8 @@ import { todoGetDataType } from '../../../../models/todoGetDataType';
 
 export const useTodoForm = (
   todos: todoGetDataType[] | undefined,
-  setTodos: Dispatch<React.SetStateAction<todoGetDataType[] | undefined>>
+  setTodos: Dispatch<React.SetStateAction<todoGetDataType[] | undefined>>,
+  setUpdateFlag: Dispatch<SetStateAction<boolean>>
 ) => {
   const [inputValue, setInputValue] = useState<string>('');
 
@@ -33,10 +35,11 @@ export const useTodoForm = (
 
       if (todos) {
         setTodos([todoData, ...todos]);
+        setUpdateFlag(true);
         setInputValue('');
       }
     },
-    [inputValue, setTodos, todos]
+    [inputValue, setTodos, setUpdateFlag, todos]
   );
 
   return { inputValue, handleChange, handleSubmit };
