@@ -28,8 +28,11 @@ export const addTodo = async (currentUser: currentUserTyep, todoData: todoDataTy
  */
 export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
   if (currentUser) {
+    const { task, isComplete, createdAt } = todoGetData;
     const todoRef = doc(firebaseFirestore, `users/${currentUser.uid}/todos`, todoGetData.id);
-    const todoData: todoDataType = {...todoGetData}
+    const todoData: todoDataType = { task: task, isComplete: isComplete, createdAt: createdAt };
+    // const todoData: todoDataType = { ...todoGetData };
+    console.log(todoData);
     await updateDoc(todoRef, todoData);
   }
 };
