@@ -38,6 +38,15 @@ export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todo
 };
 
 /**
+ * Firestore: todoのデータ削除
+ */
+export const deleteTodo = async (currentUser: currentUserTyep, todoData: todoDataType) => {
+  if (currentUser) {
+    // await addDoc(collection(firebaseFirestore, `users/${currentUser.uid}/todos`), todoData);
+  }
+};
+
+/**
  * Firestore: todoのデータを読込む
  */
 export const fetchTodo = async (currentUser: currentUserTyep) => {
