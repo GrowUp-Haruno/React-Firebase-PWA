@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import { deleteTodo } from '../../service/firebaseFirestore';
+import PrimaryButton from '../Atoms/Button/PrimaryButton';
 
 import ToDoForm from '../Elements/Todo/ToDoForm';
 import TodoList from '../Elements/Todo/TodoList';
@@ -16,6 +18,7 @@ const Todo: FC = () => {
           <ToDoForm todos={todos} setTodos={setTodos} setUpdateFlag={setUpdateFlag} />
           <TodoList todos={todos} isCmpleteChangeHandler={isCmpleteChangeHandler} />
           <TodoUpdate updateFlag={updateFlag} />
+          <PrimaryButton onClick={() => deleteTodo(currentUser)}>削除</PrimaryButton>
         </>
       )}
     </>
