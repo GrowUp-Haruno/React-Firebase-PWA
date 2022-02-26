@@ -7,7 +7,17 @@ type PropsType = {
 };
 
 const TodoUpdate: FC<PropsType> = ({ updateFlag }) => {
-  return <div> {updateFlag && <PrimaryButton>保存</PrimaryButton>}</div>;
+  return (
+    <div>
+      {' '}
+      {updateFlag && (
+        <>
+          <PrimaryButton>保存</PrimaryButton>
+          
+        </>
+      )}
+    </div>
+  );
 };
 
 TodoUpdate.displayName = 'TodoUpdate';

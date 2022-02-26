@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   CollectionReference,
+  deleteDoc,
   doc,
   DocumentData,
   getDocs,
@@ -40,9 +41,11 @@ export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todo
 /**
  * Firestore: todoのデータ削除
  */
-export const deleteTodo = async (currentUser: currentUserTyep, todoData: todoDataType) => {
+// export const deleteTodo = async (currentUser: currentUserTyep, todoData: todoDataType) => {
+export const deleteTodo = async (currentUser: currentUserTyep) => {
   if (currentUser) {
-    // await addDoc(collection(firebaseFirestore, `users/${currentUser.uid}/todos`), todoData);
+    await deleteDoc(doc(firebaseFirestore, `users/${currentUser.uid}/todos/Xl8KlNlJfgV6OB6oEpkz`));
+    console.log("削除完了")
   }
 };
 
