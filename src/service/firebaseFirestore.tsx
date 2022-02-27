@@ -20,7 +20,9 @@ import { firebaseFirestore } from './firebase';
  */
 export const addTodo = async (currentUser: currentUserTyep, todoData: todoDataType) => {
   if (currentUser) {
-    await addDoc(collection(firebaseFirestore, `users/${currentUser.uid}/todos`), todoData);
+    const addTodoRef = collection(firebaseFirestore, `users/${currentUser.uid}/todos`);
+
+    await addDoc(addTodoRef, todoData);
   }
 };
 
@@ -30,22 +32,30 @@ export const addTodo = async (currentUser: currentUserTyep, todoData: todoDataTy
 export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
   if (currentUser) {
     const { task, isComplete, createdAt } = todoGetData;
-    const todoRef = doc(firebaseFirestore, `users/${currentUser.uid}/todos`, todoGetData.id);
-    const todoData: todoDataType = { task: task, isComplete: isComplete, createdAt: createdAt };
-    // const todoData: todoDataType = { ...todoGetData };
-    console.log(todoData);
-    await updateDoc(todoRef, todoData);
+    const updateTodoRef = doc(firebaseFirestore, `users/${currentUser.uid}/todos`, todoGetData.id);
+    const updateTodoData: todoDataType = {
+      task: task,
+      isComplete: isComplete,
+      createdAt: createdAt,
+    };
+
+    await updateDoc(updateTodoRef, updateTodoData);
+    console.log('更新完了');
   }
 };
 
 /**
  * Firestore: todoのデータ削除
  */
-// export const deleteTodo = async (currentUser: currentUserTyep, todoData: todoDataType) => {
-export const deleteTodo = async (currentUser: currentUserTyep) => {
+export const deleteTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
   if (currentUser) {
-    await deleteDoc(doc(firebaseFirestore, `users/${currentUser.uid}/todos/Xl8KlNlJfgV6OB6oEpkz`));
-    console.log("削除完了")
+    const deleteTodoRef = doc(
+      firebaseFirestore,
+      `users/${currentUser.uid}/todos/${todoGetData.id}`
+    );
+
+    await deleteDoc(deleteTodoRef);
+    console.log('削除完了');
   }
 };
 
