@@ -5,4 +5,5 @@ export type todoGetDataType = {
   task: string;
   createdAt: Timestamp;
   isComplete: boolean;
+  enableDelete?: boolean;
 };
