@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import { todoGetDataType } from '../../../models/todoGetDataType';
+import PrimaryButton from '../../Atoms/Button/PrimaryButton';
 
 type propsType = {
   todos: todoGetDataType[] | undefined;
@@ -20,6 +21,9 @@ const TodoList: FC<propsType> = ({ todos, isCmpleteChangeHandler }) => {
           }}
         />
         <span>{todo.task}</span>
+        <PrimaryButton onClick={(e) => {
+          
+        }}>削除</PrimaryButton>
       </ul>
     ));
 

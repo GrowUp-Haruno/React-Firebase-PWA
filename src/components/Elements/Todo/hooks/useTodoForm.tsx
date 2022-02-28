@@ -3,6 +3,7 @@ import {
   ChangeEventHandler,
   Dispatch,
   FormEventHandler,
+  MouseEventHandler,
   SetStateAction,
   useCallback,
   useState,
@@ -42,5 +43,9 @@ export const useTodoForm = (
     [inputValue, setTodos, setUpdateFlag, todos]
   );
 
-  return { inputValue, handleChange, handleSubmit };
+  const handleDelete: MouseEventHandler<HTMLButtonElement> = useCallback(() => {
+    
+  }, []);
+
+  return { inputValue, handleChange, handleSubmit, handleDelete };
 };
