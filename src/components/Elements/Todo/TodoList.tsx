@@ -1,29 +1,28 @@
 import { FC } from 'react';
 
 import { todoGetDataType } from '../../../models/todoGetDataType';
-import PrimaryButton from '../../Atoms/Button/PrimaryButton';
+import { PicKey } from '../../../models/UtilityType';
+// import PrimaryButton from '../../Atoms/Button/PrimaryButton';
 
 type propsType = {
   todos: todoGetDataType[] | undefined;
-  isCmpleteChangeHandler: (index: number) => void;
+  checkBoxChangeHandler: (index: number, changeKey: PicKey<todoGetDataType,boolean>) => void;
 };
 
-const TodoList: FC<propsType> = ({ todos, isCmpleteChangeHandler }) => {
+const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
   const list =
     todos &&
     todos.map((todo, index) => (
       <ul key={index}>
         <input
           type="checkbox"
-          checked={todo.isComplete}
+          checked={todo.isCompleted}
           onChange={() => {
-            isCmpleteChangeHandler(index);
+            checkBoxChangeHandler(index,'isCompleted');
           }}
         />
-        <span>{todo.task}</span>
-        <PrimaryButton onClick={(e) => {
-          
-        }}>削除</PrimaryButton>
+        {/* <span>{todo.task}</span>
+        <PrimaryButton onClick={() => {}}>削除</PrimaryButton> */}
       </ul>
     ));
 

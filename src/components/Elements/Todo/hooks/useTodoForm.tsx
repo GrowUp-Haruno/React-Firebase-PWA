@@ -3,7 +3,6 @@ import {
   ChangeEventHandler,
   Dispatch,
   FormEventHandler,
-  MouseEventHandler,
   SetStateAction,
   useCallback,
   useState,
@@ -30,8 +29,9 @@ export const useTodoForm = (
       const todoData: todoGetDataType = {
         task: inputValue,
         createdAt: Timestamp.now(),
-        isComplete: false,
+        isCompleted: false,
         id: '',
+        isDelete: false
       };
 
       if (todos) {
@@ -43,9 +43,5 @@ export const useTodoForm = (
     [inputValue, setTodos, setUpdateFlag, todos]
   );
 
-  const handleDelete: MouseEventHandler<HTMLButtonElement> = useCallback(() => {
-    
-  }, []);
-
-  return { inputValue, handleChange, handleSubmit, handleDelete };
+  return { inputValue, handleChange, handleSubmit };
 };
