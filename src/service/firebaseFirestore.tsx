@@ -31,11 +31,11 @@ export const addTodo = async (currentUser: currentUserTyep, todoData: todoDataTy
  */
 export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
   if (currentUser) {
-    const { task, isComplete, createdAt } = todoGetData;
+    const { task, isCompleted, createdAt } = todoGetData;
     const updateTodoRef = doc(firebaseFirestore, `users/${currentUser.uid}/todos`, todoGetData.id);
     const updateTodoData: todoDataType = {
       task: task,
-      isComplete: isComplete,
+      isComplete: isCompleted,
       createdAt: createdAt,
     };
 
@@ -74,8 +74,9 @@ export const fetchTodo = async (currentUser: currentUserTyep) => {
     return snapshot.docs.map<todoGetDataType>((doc) => ({
       task: doc.data().task,
       createdAt: doc.data().createdAt,
-      isComplete: doc.data().isComplete,
+      isCompleted: doc.data().isComplete,
       id: doc.id,
+      isDelete: false,
     }));
   }
 };
