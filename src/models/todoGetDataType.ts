@@ -4,6 +4,6 @@ export type todoGetDataType = {
   id: string;
   task: string;
   createdAt: Timestamp;
-  isComplete: boolean;
-  enableDelete?: boolean;
+  isCompleted: boolean;
+  isDelete: boolean;
 };
