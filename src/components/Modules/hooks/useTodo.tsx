@@ -1,5 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { todoGetDataType } from '../../../models/todoGetDataType';
+import { PicKey } from '../../../models/UtilityType';
 import { AuthContext } from '../../../providers/AuthProvider';
 import { fetchTodo } from '../../../service/firebaseFirestore';
 
@@ -12,17 +13,35 @@ export const useTodo = () => {
   const [todos, setTodos] = useState<Array<todoGetDataType> | undefined>([]);
   const [updateFlag, setUpdateFlag] = useState<boolean>(false);
 
+  // // isCmpleteの論理を反転
+  // const isCompleteChangeHandler = useCallback(
+  //   (index: number) => {
+  //     if (todos) {
+  //       setTodos(
+  //         todos.map((todo, i) =>
+  //           i === index ? { ...todo, isComplete: !todo.isCompleted } : { ...todo }
+  //         )
+  //       );
+  //       setUpdateFlag(true);
+  //     }
+  //   },
+  //   [todos]
+  // );
+
   // isCmpleteの論理を反転
-  const isCmpleteChangeHandler = (index: number) => {
-    if (todos) {
-      setTodos(
-        todos.map((todo, i) =>
-          i === index ? { ...todo, isComplete: !todo.isComplete } : { ...todo }
-        )
-      );
-      setUpdateFlag(true);
-    }
-  };
+  const checkBoxChangeHandler = useCallback(
+    (index: number, changeKey: PicKey<todoGetDataType, boolean>) => {
+      if (todos) {
+        setTodos(
+          todos.map((todo, i) =>
+            i === index ? { ...todo, [changeKey]: !todo[changeKey] } : { ...todo }
+          )
+        );
+        setUpdateFlag(true);
+      }
+    },
+    [todos]
+  );
 
   // todoの初回読み込み
   useEffect(() => {
@@ -35,5 +54,12 @@ export const useTodo = () => {
     };
   }, [currentUser]);
 
-  return { currentUser, todos, updateFlag, setTodos, setUpdateFlag, isCmpleteChangeHandler };
+  return {
+    currentUser,
+    todos,
+    updateFlag,
+    setTodos,
+    setUpdateFlag,
+    checkBoxChangeHandler,
+  };
 };
