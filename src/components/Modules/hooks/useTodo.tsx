@@ -13,21 +13,6 @@ export const useTodo = () => {
   const [todos, setTodos] = useState<Array<todoGetDataType> | undefined>([]);
   const [updateFlag, setUpdateFlag] = useState<boolean>(false);
 
-  // // isCmpleteの論理を反転
-  // const isCompleteChangeHandler = useCallback(
-  //   (index: number) => {
-  //     if (todos) {
-  //       setTodos(
-  //         todos.map((todo, i) =>
-  //           i === index ? { ...todo, isComplete: !todo.isCompleted } : { ...todo }
-  //         )
-  //       );
-  //       setUpdateFlag(true);
-  //     }
-  //   },
-  //   [todos]
-  // );
-
   // isCmpleteの論理を反転
   const checkBoxChangeHandler = useCallback(
     (index: number, changeKey: PicKey<todoGetDataType, boolean>) => {
