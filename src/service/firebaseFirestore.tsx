@@ -35,7 +35,7 @@ export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todo
     const updateTodoRef = doc(firebaseFirestore, `users/${currentUser.uid}/todos`, todoGetData.id);
     const updateTodoData: todoDataType = {
       task: task,
-      isComplete: isCompleted,
+      isCompleted: isCompleted,
       createdAt: createdAt,
     };
 
@@ -74,9 +74,9 @@ export const fetchTodo = async (currentUser: currentUserTyep) => {
     return snapshot.docs.map<todoGetDataType>((doc) => ({
       task: doc.data().task,
       createdAt: doc.data().createdAt,
-      isCompleted: doc.data().isComplete,
+      isCompleted: doc.data().isCompleted,
       id: doc.id,
-      isDelete: false,
+      isDeleted: false,
     }));
   }
 };
