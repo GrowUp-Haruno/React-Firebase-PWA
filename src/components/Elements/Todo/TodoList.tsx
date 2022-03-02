@@ -21,11 +21,11 @@ const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
             checkBoxChangeHandler(index, 'isCompleted');
           }}
         />
-        <span>{todo.task}</span>
+        <span>{todo.isDeleted ? <del>{todo.task}</del> : todo.task}</span>
         <PrimaryCheckBox
-          checked={todo.isDelete}
+          checked={todo.isDeleted}
           onChange={() => {
-            checkBoxChangeHandler(index, 'isDelete');
+            checkBoxChangeHandler(index, 'isDeleted');
           }}
         />
       </ul>
