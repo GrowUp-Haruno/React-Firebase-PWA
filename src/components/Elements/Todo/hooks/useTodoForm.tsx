@@ -31,7 +31,7 @@ export const useTodoForm = (
         createdAt: Timestamp.now(),
         isCompleted: false,
         id: '',
-        isDelete: false
+        isDeleted: false
       };
 
       if (todos) {
