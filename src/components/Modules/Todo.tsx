@@ -1,6 +1,4 @@
 import { FC } from 'react';
-// import { deleteTodo } from '../../service/firebaseFirestore';
-// import PrimaryButton from '../Atoms/Button/PrimaryButton';
 
 import ToDoForm from '../Elements/Todo/ToDoForm';
 import TodoList from '../Elements/Todo/TodoList';
@@ -8,8 +6,15 @@ import TodoUpdate from '../Elements/Todo/TodoUpdate';
 import { useTodo } from './hooks/useTodo';
 
 const Todo: FC = () => {
-  const { currentUser, todos, updateFlag, setTodos, setUpdateFlag, checkBoxChangeHandler } =
-    useTodo();
+  const {
+    currentUser,
+    todos,
+    updateFlag,
+    setTodos,
+    setUpdateFlag,
+    checkBoxChangeHandler,
+    todoUpdateHandler,
+  } = useTodo();
 
   return (
     <>
@@ -17,8 +22,7 @@ const Todo: FC = () => {
         <>
           <ToDoForm todos={todos} setTodos={setTodos} setUpdateFlag={setUpdateFlag} />
           <TodoList todos={todos} checkBoxChangeHandler={checkBoxChangeHandler} />
-          <TodoUpdate updateFlag={updateFlag} />
-          {/* <PrimaryButton onClick={() => deleteTodo(currentUser)}>削除</PrimaryButton> */}
+          <TodoUpdate updateFlag={updateFlag} todoUpdateHandler={todoUpdateHandler} />
         </>
       )}
     </>

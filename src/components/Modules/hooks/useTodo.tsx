@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { todoGetDataType } from '../../../models/todoGetDataType';
 import { PicKey } from '../../../models/UtilityType';
 import { AuthContext } from '../../../providers/AuthProvider';
-import { fetchTodo } from '../../../service/firebaseFirestore';
+import { batchTodo, fetchTodo } from '../../../service/firebaseFirestore';
 
 /**
  * useTodoカスタムフック
@@ -19,7 +19,7 @@ export const useTodo = () => {
       if (todos) {
         setTodos(
           todos.map((todo, i) =>
-            i === index ? { ...todo, [changeKey]: !todo[changeKey] } : { ...todo }
+            i === index ? { ...todo, [changeKey]: !todo[changeKey], isUpdated: true } : { ...todo }
           )
         );
         setUpdateFlag(true);
@@ -27,6 +27,26 @@ export const useTodo = () => {
     },
     [todos]
   );
+
+  const todoUpdateHandler = useCallback(async () => {
+    if (todos) {
+      const batch = batchTodo(currentUser, todos);
+      if (batch) {
+        try {
+          console.log('Firestoreバッチ処理開始');
+          await batch.commit();
+        } catch (error) {
+          console.log('Firestoreバッチ処理エラー');
+          console.log(error);
+        } finally {
+          console.log('Firestoreバッチ処理完了');
+          setTodos(await fetchTodo(currentUser));
+          setUpdateFlag(false);
+          console.log('Firestore再読み込み完了');
+        }
+      }
+    }
+  }, [currentUser, todos]);
 
   // todoの初回読み込み
   useEffect(() => {
@@ -46,5 +66,6 @@ export const useTodo = () => {
     setTodos,
     setUpdateFlag,
     checkBoxChangeHandler,
+    todoUpdateHandler,
   };
 };

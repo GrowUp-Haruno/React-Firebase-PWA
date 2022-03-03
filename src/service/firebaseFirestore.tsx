@@ -9,6 +9,7 @@ import {
   orderBy,
   query,
   updateDoc,
+  writeBatch,
 } from 'firebase/firestore';
 import { todoDataType } from '../models/todoDataType';
 import { todoGetDataType } from '../models/todoGetDataType';
@@ -30,7 +31,7 @@ export const addTodo = async (currentUser: currentUserTyep, todoData: todoDataTy
  * Firestore: todoのデータ更新
  */
 export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
-  if (currentUser) {
+  if (currentUser && todoGetData.id) {
     const { task, isCompleted, createdAt } = todoGetData;
     const updateTodoRef = doc(firebaseFirestore, `users/${currentUser.uid}/todos`, todoGetData.id);
     const updateTodoData: todoDataType = {
@@ -48,7 +49,7 @@ export const updateTodo = async (currentUser: currentUserTyep, todoGetData: todo
  * Firestore: todoのデータ削除
  */
 export const deleteTodo = async (currentUser: currentUserTyep, todoGetData: todoGetDataType) => {
-  if (currentUser) {
+  if (currentUser && todoGetData.id) {
     const deleteTodoRef = doc(
       firebaseFirestore,
       `users/${currentUser.uid}/todos/${todoGetData.id}`
@@ -56,6 +57,69 @@ export const deleteTodo = async (currentUser: currentUserTyep, todoGetData: todo
 
     await deleteDoc(deleteTodoRef);
     console.log('削除完了');
+  }
+};
+
+/**
+ * Firestore: todoのバッチ処理
+ */
+export const batchTodo = (currentUser: currentUserTyep, todoGetDatas: todoGetDataType[]) => {
+  if (currentUser) {
+    const batch = writeBatch(firebaseFirestore);
+
+    todoGetDatas.forEach(({ id, task, createdAt, isCompleted, isDeleted, isUpdated }, index) => {
+      // console.log(`${index}: ${JSON.stringify(todoGetData)}`);
+
+      // todoのデータ書込み
+      if (id === undefined && isDeleted === false) {
+        console.log(`${index}: 書き込み処理`);
+
+        const setTodoRef = doc(collection(firebaseFirestore, `users/${currentUser.uid}/todos`));
+        const setTodo: todoDataType = {
+          task: task,
+          isCompleted: isCompleted,
+          createdAt: createdAt,
+        };
+
+        batch.set(setTodoRef, setTodo);
+      }
+
+      // // データの更新
+      else if (typeof id === 'string' && isDeleted === false && isUpdated === true) {
+        console.log(`${index}: 更新処理`);
+  
+        const updateTodoRef = doc(
+          firebaseFirestore,
+          `users/${currentUser.uid}/todos`,
+          id
+        );
+        const updateTodoData: todoDataType = {
+          task: task,
+          isCompleted: isCompleted,
+          createdAt: createdAt,
+        };
+        batch.update(updateTodoRef, updateTodoData);
+      }
+
+      // // todoのデータ削除
+      else if (typeof id === 'string' && isDeleted === true && isUpdated === true) {
+        console.log(`${index}: 削除処理`);
+        const deleteTodoRef = doc(
+          firebaseFirestore,
+          `users/${currentUser.uid}/todos/${id}`
+        );
+        batch.delete(deleteTodoRef);
+      }
+      else {
+        console.log(`${index}: その他`);
+      }
+    });
+
+    return batch
+    // (async () => {
+    //   console.log(`バッチ処理を開始`);
+    //   await batch.commit();
+    // })();
   }
 };
 
@@ -77,6 +141,7 @@ export const fetchTodo = async (currentUser: currentUserTyep) => {
       isCompleted: doc.data().isCompleted,
       id: doc.id,
       isDeleted: false,
+      isUpdated: false,
     }));
   }
 };
