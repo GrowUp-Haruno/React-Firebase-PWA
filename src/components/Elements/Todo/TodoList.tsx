@@ -7,10 +7,11 @@ import PrimaryCheckBox from '../../Atoms/Input/PrimaryCheckBox';
 
 type propsType = {
   todos: todoGetDataType[] | undefined;
+  nowBatchCommit: boolean;
   checkBoxChangeHandler: (index: number, changeKey: PicKey<todoGetDataType, boolean>) => void;
 };
 
-const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
+const TodoList: FC<propsType> = ({ todos, nowBatchCommit, checkBoxChangeHandler }) => {
   const list =
     todos &&
     todos.map((todo, index) => (
@@ -20,6 +21,7 @@ const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
           onChange={() => {
             checkBoxChangeHandler(index, 'isCompleted');
           }}
+          disabled={nowBatchCommit}
         />
         <span>{todo.isDeleted ? <del>{todo.task}</del> : todo.task}</span>
         <PrimaryCheckBox
@@ -27,6 +29,7 @@ const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
           onChange={() => {
             checkBoxChangeHandler(index, 'isDeleted');
           }}
+          disabled={nowBatchCommit}
         />
       </ul>
     ));

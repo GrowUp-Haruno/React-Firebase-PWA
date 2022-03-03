@@ -4,16 +4,19 @@ import PrimaryButton from '../../Atoms/Button/PrimaryButton';
 //Propsの型定義
 type PropsType = {
   updateFlag: boolean;
+  nowBatchCommit: boolean;
   todoUpdateHandler: () => void;
 };
 
-const TodoUpdate: FC<PropsType> = ({ updateFlag, todoUpdateHandler }) => {
+const TodoUpdate: FC<PropsType> = ({ updateFlag, nowBatchCommit, todoUpdateHandler }) => {
   return (
     <div>
       {' '}
       {updateFlag && (
         <>
-          <PrimaryButton onClick={todoUpdateHandler}>保存</PrimaryButton>
+          <PrimaryButton onClick={todoUpdateHandler} disabled={nowBatchCommit}>
+            保存
+          </PrimaryButton>
         </>
       )}
     </div>

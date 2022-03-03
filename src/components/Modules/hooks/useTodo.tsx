@@ -13,6 +13,9 @@ export const useTodo = () => {
   const [todos, setTodos] = useState<Array<todoGetDataType> | undefined>([]);
   const [updateFlag, setUpdateFlag] = useState<boolean>(false);
 
+  // batch.commit()の状態
+  const [nowBatchCommit, setNowBatchCommit] = useState<boolean>(false);
+
   // isCmpleteの論理を反転
   const checkBoxChangeHandler = useCallback(
     (index: number, changeKey: PicKey<todoGetDataType, boolean>) => {
@@ -34,6 +37,7 @@ export const useTodo = () => {
       if (batch) {
         try {
           console.log('Firestoreバッチ処理開始');
+          setNowBatchCommit(true);
           await batch.commit();
         } catch (error) {
           console.log('Firestoreバッチ処理エラー');
@@ -42,6 +46,7 @@ export const useTodo = () => {
           console.log('Firestoreバッチ処理完了');
           setTodos(await fetchTodo(currentUser));
           setUpdateFlag(false);
+          setNowBatchCommit(false);
           console.log('Firestore再読み込み完了');
         }
       }
@@ -63,6 +68,7 @@ export const useTodo = () => {
     currentUser,
     todos,
     updateFlag,
+    nowBatchCommit,
     setTodos,
     setUpdateFlag,
     checkBoxChangeHandler,

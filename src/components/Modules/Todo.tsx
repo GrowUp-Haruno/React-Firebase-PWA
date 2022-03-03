@@ -10,6 +10,7 @@ const Todo: FC = () => {
     currentUser,
     todos,
     updateFlag,
+    nowBatchCommit,
     setTodos,
     setUpdateFlag,
     checkBoxChangeHandler,
@@ -20,9 +21,22 @@ const Todo: FC = () => {
     <>
       {currentUser && (
         <>
-          <ToDoForm todos={todos} setTodos={setTodos} setUpdateFlag={setUpdateFlag} />
-          <TodoList todos={todos} checkBoxChangeHandler={checkBoxChangeHandler} />
-          <TodoUpdate updateFlag={updateFlag} todoUpdateHandler={todoUpdateHandler} />
+          <ToDoForm
+            todos={todos}
+            setTodos={setTodos}
+            setUpdateFlag={setUpdateFlag}
+            nowBatchCommit={nowBatchCommit}
+          />
+          <TodoList
+            todos={todos}
+            checkBoxChangeHandler={checkBoxChangeHandler}
+            nowBatchCommit={nowBatchCommit}
+          />
+          <TodoUpdate
+            updateFlag={updateFlag}
+            todoUpdateHandler={todoUpdateHandler}
+            nowBatchCommit={nowBatchCommit}
+          />
         </>
       )}
     </>
