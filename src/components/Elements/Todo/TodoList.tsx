@@ -3,7 +3,6 @@ import { FC } from 'react';
 import { todoGetDataType } from '../../../models/todoGetDataType';
 import { PicKey } from '../../../models/UtilityType';
 import PrimaryCheckBox from '../../Atoms/Input/PrimaryCheckBox';
-// import PrimaryButton from '../../Atoms/Button/PrimaryButton';
 
 type propsType = {
   todos: todoGetDataType[] | undefined;
@@ -11,6 +10,7 @@ type propsType = {
 };
 
 const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
+
   const list =
     todos &&
     todos.map((todo, index) => (
@@ -34,7 +34,6 @@ const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
   return (
     <div>
       <li>
-        {/* <ul></ul> */}
         {list}
       </li>
     </div>

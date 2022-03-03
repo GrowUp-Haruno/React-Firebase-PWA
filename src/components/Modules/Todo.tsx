@@ -20,9 +20,19 @@ const Todo: FC = () => {
     <>
       {currentUser && (
         <>
-          <ToDoForm todos={todos} setTodos={setTodos} setUpdateFlag={setUpdateFlag} />
-          <TodoList todos={todos} checkBoxChangeHandler={checkBoxChangeHandler} />
-          <TodoUpdate updateFlag={updateFlag} todoUpdateHandler={todoUpdateHandler} />
+          <ToDoForm
+            todos={todos}
+            setTodos={setTodos}
+            setUpdateFlag={setUpdateFlag}
+          />
+          <TodoList
+            todos={todos}
+            checkBoxChangeHandler={checkBoxChangeHandler}
+          />
+          <TodoUpdate
+            updateFlag={updateFlag}
+            todoUpdateHandler={todoUpdateHandler}
+          />
         </>
       )}
     </>

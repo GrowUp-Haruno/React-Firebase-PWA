@@ -13,7 +13,9 @@ const TodoUpdate: FC<PropsType> = ({ updateFlag, todoUpdateHandler }) => {
       {' '}
       {updateFlag && (
         <>
-          <PrimaryButton onClick={todoUpdateHandler}>保存</PrimaryButton>
+          <PrimaryButton onClick={todoUpdateHandler}>
+            保存
+          </PrimaryButton>
         </>
       )}
     </div>
