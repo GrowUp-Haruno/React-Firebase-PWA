@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, FC, FormEventHandler, memo } from 'react';
+import { DetailedHTMLProps, FC,  memo } from 'react';
 
 //Propsの型定義
 type PropsType = {} & DetailedHTMLProps<

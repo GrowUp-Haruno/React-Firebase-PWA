@@ -4,16 +4,16 @@ import PrimaryButton from '../../Atoms/Button/PrimaryButton';
 //Propsの型定義
 type PropsType = {
   updateFlag: boolean;
+  todoUpdateHandler: () => void;
 };
 
-const TodoUpdate: FC<PropsType> = ({ updateFlag }) => {
+const TodoUpdate: FC<PropsType> = ({ updateFlag, todoUpdateHandler }) => {
   return (
     <div>
       {' '}
       {updateFlag && (
         <>
-          <PrimaryButton>保存</PrimaryButton>
-          
+          <PrimaryButton onClick={todoUpdateHandler}>保存</PrimaryButton>
         </>
       )}
     </div>
