@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { todoGetDataType } from '../../../models/todoGetDataType';
 import { PicKey } from '../../../models/UtilityType';
 import { AuthContext } from '../../../providers/AuthProvider';
+import { NowBatchCommitContext } from '../../../providers/NowBatchCommitProvider';
 import { batchTodo, fetchTodo } from '../../../service/firebaseFirestore';
 
 /**
@@ -10,11 +11,10 @@ import { batchTodo, fetchTodo } from '../../../service/firebaseFirestore';
  */
 export const useTodo = () => {
   const currentUser = useContext(AuthContext);
+  const { setNowBatchCommit } = useContext(NowBatchCommitContext);
+
   const [todos, setTodos] = useState<Array<todoGetDataType> | undefined>([]);
   const [updateFlag, setUpdateFlag] = useState<boolean>(false);
-
-  // batch.commit()の状態
-  const [nowBatchCommit, setNowBatchCommit] = useState<boolean>(false);
 
   // isCmpleteの論理を反転
   const checkBoxChangeHandler = useCallback(
@@ -51,7 +51,7 @@ export const useTodo = () => {
         }
       }
     }
-  }, [currentUser, todos]);
+  }, [currentUser, setNowBatchCommit, todos]);
 
   // todoの初回読み込み
   useEffect(() => {
@@ -68,7 +68,6 @@ export const useTodo = () => {
     currentUser,
     todos,
     updateFlag,
-    nowBatchCommit,
     setTodos,
     setUpdateFlag,
     checkBoxChangeHandler,

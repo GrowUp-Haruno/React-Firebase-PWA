@@ -10,7 +10,6 @@ const Todo: FC = () => {
     currentUser,
     todos,
     updateFlag,
-    nowBatchCommit,
     setTodos,
     setUpdateFlag,
     checkBoxChangeHandler,
@@ -25,17 +24,14 @@ const Todo: FC = () => {
             todos={todos}
             setTodos={setTodos}
             setUpdateFlag={setUpdateFlag}
-            nowBatchCommit={nowBatchCommit}
           />
           <TodoList
             todos={todos}
             checkBoxChangeHandler={checkBoxChangeHandler}
-            nowBatchCommit={nowBatchCommit}
           />
           <TodoUpdate
             updateFlag={updateFlag}
             todoUpdateHandler={todoUpdateHandler}
-            nowBatchCommit={nowBatchCommit}
           />
         </>
       )}

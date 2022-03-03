@@ -1,4 +1,4 @@
-import { Dispatch, FC, memo, SetStateAction } from 'react';
+import { Dispatch, FC, memo, SetStateAction,  } from 'react';
 
 import { todoGetDataType } from '../../../models/todoGetDataType';
 import PrimaryButton from '../../Atoms/Button/PrimaryButton';
@@ -7,23 +7,20 @@ import { useTodoForm } from './hooks/useTodoForm';
 
 type propsType = {
   todos: todoGetDataType[] | undefined;
-  nowBatchCommit: boolean;
   setTodos: Dispatch<SetStateAction<todoGetDataType[] | undefined>>;
   setUpdateFlag: Dispatch<SetStateAction<boolean>>;
 };
 
-const ToDoForm: FC<propsType> = memo(({ todos, nowBatchCommit, setTodos, setUpdateFlag }) => {
+const ToDoForm: FC<propsType> = memo(({ todos,  setTodos, setUpdateFlag }) => {
   const { inputValue, handleChange, handleSubmit } = useTodoForm(todos, setTodos, setUpdateFlag);
-
   return (
     <form onSubmit={handleSubmit}>
       <PrimaryInputText
         placeholder="TodoName"
         value={inputValue}
         onChange={handleChange}
-        disabled={nowBatchCommit}
       />
-      <PrimaryButton type="submit" disabled={nowBatchCommit}>
+      <PrimaryButton type="submit">
         追加
       </PrimaryButton>
     </form>
