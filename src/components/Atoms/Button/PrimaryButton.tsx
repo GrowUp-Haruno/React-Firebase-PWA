@@ -1,4 +1,5 @@
-import { DetailedHTMLProps, FC, FormEventHandler, memo } from 'react';
+import { DetailedHTMLProps, FC, memo, useContext } from 'react';
+import { NowBatchCommitContext } from '../../../providers/NowBatchCommitProvider';
 
 //Propsの型定義
 type PropsType = {} & DetailedHTMLProps<
@@ -7,7 +8,13 @@ type PropsType = {} & DetailedHTMLProps<
 >;
 
 const PrimaryButton: FC<PropsType> = memo(({ children, ...attr }) => {
-  return <button {...attr}>{children}</button>;
+  const { nowBatchCommit } = useContext(NowBatchCommitContext);
+  
+  return (
+    <button {...attr} disabled={nowBatchCommit}>
+      {children}
+    </button>
+  );
 });
 
 export default PrimaryButton;

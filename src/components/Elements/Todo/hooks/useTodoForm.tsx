@@ -30,8 +30,9 @@ export const useTodoForm = (
         task: inputValue,
         createdAt: Timestamp.now(),
         isCompleted: false,
-        id: '',
-        isDeleted: false
+        id: undefined,
+        isDeleted: false,
+        isUpdated: false,
       };
 
       if (todos) {
