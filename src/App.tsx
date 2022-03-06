@@ -1,7 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { BaseLayout } from './components/Atoms/Layout/BaseLayout';
-import { Login } from './components/Substrates/Login';
-import Todo from './components/Substrates/Todo';
+import { Page } from './components/Substrates/Page';
 import AuthProvider from './providers/AuthProvider';
 import NowBatchCommitProvider from './providers/NowBatchCommitProvider';
 
@@ -11,8 +10,7 @@ function App() {
       <AuthProvider>
         <NowBatchCommitProvider>
           <BaseLayout>
-            <Login />
-            <Todo />
+            <Page />
           </BaseLayout>
         </NowBatchCommitProvider>
       </AuthProvider>
