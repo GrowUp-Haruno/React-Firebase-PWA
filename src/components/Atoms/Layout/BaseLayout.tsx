@@ -1,13 +1,10 @@
 import { Flex, useColorModeValue } from '@chakra-ui/react';
-import { FC, useContext } from 'react';
-import { AuthContext } from '../../providers/AuthProvider';
-
+import { FC } from 'react';
 export const BaseLayout: FC = ({ children }) => {
-  const currentUser = useContext(AuthContext);
   return (
     <Flex
       direction="column"
-      h={currentUser ? '200vh-60px' : '100vh'}
+      h="100vh"
       align="center"
       justify="center"
       bg={useColorModeValue('gray.200', 'gray.800')}
