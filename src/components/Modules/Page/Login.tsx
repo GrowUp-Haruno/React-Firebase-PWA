@@ -1,8 +1,8 @@
 import { Heading, Stack } from '@chakra-ui/react';
 import { FC, memo } from 'react';
 
-import { GoogleLoginButton } from '../Elements/Button/GoogleLoginButton';
-import { PrimaryCard } from '../Atoms/Card/PrimaryCard';
+import { GoogleLoginButton } from '../../Elements/Button/GoogleLoginButton';
+import { PrimaryCard } from '../../Atoms/Card/PrimaryCard';
 
 export const Login: FC = memo(() => {
   return (

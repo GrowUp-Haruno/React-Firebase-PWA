@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { todoGetDataType } from '../../../models/todoGetDataType';
 import { PicKey } from '../../../models/UtilityType';
 import { PrimaryCheckBox } from '../../Atoms/Input/PrimaryCheckBox';
-import { DeleteButton } from '../Button/DeleteButton';
+import { DeleteButton } from '../../Elements/Button/DeleteButton';
 
 type propsType = {
   todos: todoGetDataType[] | undefined;

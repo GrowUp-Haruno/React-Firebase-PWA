@@ -6,7 +6,7 @@ import { UpdateButton } from '../Elements/Button/UpdateButton';
 import ToDoForm from '../Elements/Todo/ToDoForm';
 import TodoList from '../Elements/Todo/TodoList';
 
-import { useTodo } from './hooks/useTodo';
+import { useTodo } from './Pages/hooks/useTodo';
 
 const Todo: FC = memo(() => {
   const { todos, updateFlag, setTodos, setUpdateFlag, checkBoxChangeHandler, todoUpdateHandler } =
