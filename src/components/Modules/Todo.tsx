@@ -1,9 +1,10 @@
 import { FC, memo } from 'react';
 
 import { PrimaryCard } from '../Atoms/Card/PrimaryCard';
+import { UpdateButton } from '../Elements/Button/UpdateButton';
 import ToDoForm from '../Elements/Todo/ToDoForm';
 import TodoList from '../Elements/Todo/TodoList';
-import TodoUpdate from '../Elements/Todo/TodoUpdate';
+
 import { useTodo } from './hooks/useTodo';
 
 const Todo: FC = memo(() => {
@@ -14,7 +15,7 @@ const Todo: FC = memo(() => {
     <PrimaryCard>
       <ToDoForm todos={todos} setTodos={setTodos} setUpdateFlag={setUpdateFlag} />
       <TodoList todos={todos} checkBoxChangeHandler={checkBoxChangeHandler} />
-      <TodoUpdate updateFlag={updateFlag} todoUpdateHandler={todoUpdateHandler} />
+      <UpdateButton isDisabled={updateFlag} onClick={todoUpdateHandler} />
     </PrimaryCard>
   );
 });
