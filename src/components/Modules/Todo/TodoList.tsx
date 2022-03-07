@@ -1,3 +1,4 @@
+import { Box, HStack, VStack } from '@chakra-ui/react';
 import { FC, memo } from 'react';
 
 import { todoGetDataType } from '../../../models/todoGetDataType';
@@ -14,26 +15,22 @@ export const TodoList: FC<propsType> = memo(({ todos, checkBoxChangeHandler }) =
   const list =
     todos &&
     todos.map((todo, index) => (
-      <ul key={index}>
+      <HStack key={index} justifyContent={'space-between'}>
         <PrimaryCheckBox
           isChecked={todo.isCompleted}
           onChange={() => {
             checkBoxChangeHandler(index, 'isCompleted');
           }}
         />
-        <span>{todo.isDeleted ? <del>{todo.task}</del> : todo.task}</span>
+        <Box alignItems='flex-start' flexGrow={1}>{todo.isDeleted ? <del>{todo.task}</del> : todo.task}</Box>
         <DeleteButton
           isDeleted={todo.isDeleted}
           onClick={() => {
             checkBoxChangeHandler(index, 'isDeleted');
           }}
         />
-      </ul>
+      </HStack>
     ));
 
-  return (
-    <div>
-      <li>{list}</li>
-    </div>
-  );
+  return <VStack align="stretch">{list}</VStack>;
 });

@@ -1,11 +1,11 @@
 import { ButtonProps } from '@chakra-ui/react';
 import { FC, memo } from 'react';
-import { PrimaryButton } from '../../Atoms/Button/PrimaryButton';
+import { SecondaryButton } from '../../Atoms/Button/SecondaryButton';
 
 export const UpdateButton: FC<ButtonProps> = memo(({ isDisabled, onClick }) => {
   return (
-    <PrimaryButton isDisabled={!isDisabled} onClick={onClick}>
+    <SecondaryButton isDisabled={!isDisabled} onClick={onClick}>
       更新する
-    </PrimaryButton>
+    </SecondaryButton>
   );
 });
