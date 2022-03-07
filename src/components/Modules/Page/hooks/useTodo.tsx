@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { todoGetDataType } from '../../../models/todoGetDataType';
-import { PicKey } from '../../../models/UtilityType';
-import { AuthContext } from '../../../providers/AuthProvider';
-import { NowBatchCommitContext } from '../../../providers/NowBatchCommitProvider';
-import { batchTodo, fetchTodo } from '../../../service/firebaseFirestore';
+import { todoGetDataType } from '../../../../models/todoGetDataType';
+import { PicKey } from '../../../../models/UtilityType';
+import { AuthContext } from '../../../../providers/AuthProvider';
+import { NowBatchCommitContext } from '../../../../providers/NowBatchCommitProvider';
+import { batchTodo, fetchTodo } from '../../../../service/firebaseFirestore';
 
 /**
  * useTodoカスタムフック
@@ -56,7 +56,9 @@ export const useTodo = () => {
   // todoの初回読み込み
   useEffect(() => {
     (async () => {
+      console.log('開始')
       setTodos(await fetchTodo(currentUser));
+      console.log('完了')
     })();
     return () => {
       setTodos([]);
@@ -65,7 +67,6 @@ export const useTodo = () => {
   }, [currentUser]);
 
   return {
-    currentUser,
     todos,
     updateFlag,
     setTodos,
