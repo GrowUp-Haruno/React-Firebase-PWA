@@ -2,7 +2,7 @@ import { Heading, Stack } from '@chakra-ui/react';
 import { FC, memo } from 'react';
 
 import { GoogleLoginButton } from '../Elements/Button/GoogleLoginButton';
-import Card from '../Elements/Card';
+import { PrimaryCard } from '../Atoms/Card/PrimaryCard';
 
 export const Login: FC = memo(() => {
   return (
@@ -10,9 +10,9 @@ export const Login: FC = memo(() => {
       <Heading fontSize="3xl" textAlign="center">
         🎉ToDoアプリへようこそ🎉
       </Heading>
-      <Card>
+      <PrimaryCard>
         <GoogleLoginButton />
-      </Card>
+      </PrimaryCard>
     </Stack>
   );
 });
