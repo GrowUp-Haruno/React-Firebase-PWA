@@ -1,13 +1,17 @@
-import { FC, InputHTMLAttributes, memo, useContext } from 'react';
+import { Checkbox, CheckboxProps } from '@chakra-ui/react';
+import { FC, memo, useContext } from 'react';
 import { NowBatchCommitContext } from '../../../providers/NowBatchCommitProvider';
 
-//Propsの型定義
-type PropsType = {} & InputHTMLAttributes<HTMLInputElement>;
-
-const PrimaryCheckBox: FC<PropsType> = memo(({ ...attr }) => {
+export const PrimaryCheckBox: FC<CheckboxProps> = memo(({ isChecked, onChange }) => {
+  // バッチ処理中は押せなくする
   const { nowBatchCommit } = useContext(NowBatchCommitContext);
-  
-  return <input {...attr} type="checkbox" disabled={nowBatchCommit} />;
-});
 
-export default PrimaryCheckBox;
+  return (
+    <Checkbox
+      isDisabled={nowBatchCommit}
+      isChecked={isChecked}
+      onChange={onChange}
+      colorScheme="blue"
+    />
+  );
+});
