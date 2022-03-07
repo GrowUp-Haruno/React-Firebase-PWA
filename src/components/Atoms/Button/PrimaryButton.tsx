@@ -2,7 +2,7 @@ import { Button, ButtonProps } from '@chakra-ui/react';
 import { FC, memo, useContext } from 'react';
 import { NowBatchCommitContext } from '../../../providers/NowBatchCommitProvider';
 
-const PrimaryButton: FC<ButtonProps> = memo(
+export const PrimaryButton: FC<ButtonProps> = memo(
   ({ children, onClick, type, leftIcon, variant, isDisabled }) => {
     const { nowBatchCommit } = useContext(NowBatchCommitContext);
 
@@ -22,5 +22,3 @@ const PrimaryButton: FC<ButtonProps> = memo(
     );
   }
 );
-
-export default PrimaryButton;

@@ -1,6 +1,7 @@
+import { FC, memo } from 'react';
 import { Flex, FlexProps, useColorModeValue } from '@chakra-ui/react';
-import { FC } from 'react';
-export const BaseLayout: FC<FlexProps> = ({ children, justify }) => {
+
+export const BaseLayout: FC<FlexProps> = memo(({ children, justify }) => {
   return (
     <Flex
       direction="column"
@@ -12,4 +13,4 @@ export const BaseLayout: FC<FlexProps> = ({ children, justify }) => {
       {children}
     </Flex>
   );
-};
+});

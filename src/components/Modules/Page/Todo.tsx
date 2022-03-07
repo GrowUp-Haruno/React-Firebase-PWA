@@ -1,14 +1,13 @@
-import { Divider } from '@chakra-ui/react';
 import { FC, memo } from 'react';
+import { Divider } from '@chakra-ui/react';
 
-import { PrimaryCard } from '../Atoms/Card/PrimaryCard';
-import { UpdateButton } from '../Elements/Button/UpdateButton';
-import ToDoForm from '../Elements/Todo/ToDoForm';
-import TodoList from '../Elements/Todo/TodoList';
+import { PrimaryCard } from '../../Atoms/Card/PrimaryCard';
+import { UpdateButton } from '../../Elements/Button/UpdateButton';
+import { ToDoForm } from '../Todo/ToDoForm';
+import { TodoList } from '../Todo/TodoList';
+import { useTodo } from './hooks/useTodo';
 
-import { useTodo } from './Pages/hooks/useTodo';
-
-const Todo: FC = memo(() => {
+export const Todo: FC = memo(() => {
   const { todos, updateFlag, setTodos, setUpdateFlag, checkBoxChangeHandler, todoUpdateHandler } =
     useTodo();
 
@@ -22,5 +21,3 @@ const Todo: FC = memo(() => {
     </PrimaryCard>
   );
 });
-
-export default Todo;

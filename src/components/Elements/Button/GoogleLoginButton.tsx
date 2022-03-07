@@ -2,7 +2,7 @@ import { FC, memo } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 
 import { signInWithGoogle } from '../../../service/firebaseAuthentication';
-import PrimaryButton from '../../Atoms/Button/PrimaryButton';
+import { PrimaryButton } from '../../Atoms/Button/PrimaryButton';
 
 export const GoogleLoginButton: FC = memo(() => {
   return (

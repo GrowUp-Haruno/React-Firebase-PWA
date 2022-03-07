@@ -1,8 +1,8 @@
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { Stack, StackProps } from '@chakra-ui/layout';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
-export const PrimaryCard: FC<StackProps> = ({ children }) => {
+export const PrimaryCard: FC<StackProps> = memo(({ children }) => {
   return (
     <Stack
       spacing={4}
@@ -17,4 +17,4 @@ export const PrimaryCard: FC<StackProps> = ({ children }) => {
       {children}
     </Stack>
   );
-};
+});

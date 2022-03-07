@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler } from 'react';
+import { FC, memo, MouseEventHandler } from 'react';
 import { DeleteIcon } from '@chakra-ui/icons';
 
 import { PrimaryIconButton } from '../../Atoms/Button/PrimaryIconButton';
@@ -8,7 +8,7 @@ type PropsType = {
   isDeleted: boolean;
 };
 
-export const DeleteButton: FC<PropsType> = ({ onClick, isDeleted }) => {
+export const DeleteButton: FC<PropsType> = memo(({ onClick, isDeleted }) => {
   return (
     <PrimaryIconButton
       colorScheme="red"
@@ -18,4 +18,4 @@ export const DeleteButton: FC<PropsType> = ({ onClick, isDeleted }) => {
       variant={isDeleted ? 'solid' : 'outline'}
     />
   );
-};
+});

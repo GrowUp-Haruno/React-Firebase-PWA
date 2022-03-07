@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { todoGetDataType } from '../../../models/todoGetDataType';
 import { PicKey } from '../../../models/UtilityType';
@@ -10,7 +10,7 @@ type propsType = {
   checkBoxChangeHandler: (index: number, changeKey: PicKey<todoGetDataType, boolean>) => void;
 };
 
-const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
+export const TodoList: FC<propsType> = memo(({ todos, checkBoxChangeHandler }) => {
   const list =
     todos &&
     todos.map((todo, index) => (
@@ -36,6 +36,4 @@ const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
       <li>{list}</li>
     </div>
   );
-};
-
-export default TodoList;
+});
