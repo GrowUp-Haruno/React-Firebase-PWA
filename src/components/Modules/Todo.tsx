@@ -1,3 +1,4 @@
+import { Divider } from '@chakra-ui/react';
 import { FC, memo } from 'react';
 
 import { PrimaryCard } from '../Atoms/Card/PrimaryCard';
@@ -14,7 +15,9 @@ const Todo: FC = memo(() => {
   return (
     <PrimaryCard>
       <ToDoForm todos={todos} setTodos={setTodos} setUpdateFlag={setUpdateFlag} />
+      <Divider />
       <TodoList todos={todos} checkBoxChangeHandler={checkBoxChangeHandler} />
+      <Divider />
       <UpdateButton isDisabled={updateFlag} onClick={todoUpdateHandler} />
     </PrimaryCard>
   );

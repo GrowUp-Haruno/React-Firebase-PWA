@@ -2,7 +2,8 @@ import { FC } from 'react';
 
 import { todoGetDataType } from '../../../models/todoGetDataType';
 import { PicKey } from '../../../models/UtilityType';
-import PrimaryCheckBox from '../../Atoms/Input/PrimaryCheckBox';
+import { PrimaryCheckBox } from '../../Atoms/Input/PrimaryCheckBox';
+import { DeleteButton } from '../Button/DeleteButton';
 
 type propsType = {
   todos: todoGetDataType[] | undefined;
@@ -10,21 +11,20 @@ type propsType = {
 };
 
 const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
-
   const list =
     todos &&
     todos.map((todo, index) => (
       <ul key={index}>
         <PrimaryCheckBox
-          checked={todo.isCompleted}
+          isChecked={todo.isCompleted}
           onChange={() => {
             checkBoxChangeHandler(index, 'isCompleted');
           }}
         />
         <span>{todo.isDeleted ? <del>{todo.task}</del> : todo.task}</span>
-        <PrimaryCheckBox
-          checked={todo.isDeleted}
-          onChange={() => {
+        <DeleteButton
+          isDeleted={todo.isDeleted}
+          onClick={() => {
             checkBoxChangeHandler(index, 'isDeleted');
           }}
         />
@@ -33,9 +33,7 @@ const TodoList: FC<propsType> = ({ todos, checkBoxChangeHandler }) => {
 
   return (
     <div>
-      <li>
-        {list}
-      </li>
+      <li>{list}</li>
     </div>
   );
 };
