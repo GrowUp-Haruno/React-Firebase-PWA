@@ -1,7 +1,7 @@
-import { Box, HStack, Spacer, StackProps } from '@chakra-ui/react';
-// import { User } from '@firebase/auth';
 import { FC, memo } from 'react';
-// import UserMenu from './UserMenu';
+import { Box, HStack, Spacer, StackProps } from '@chakra-ui/react';
+
+import { HeaderUserMenu } from './HeaderUserMenu';
 
 type PropsType = {
   height?: StackProps['height'];
@@ -14,7 +14,7 @@ export const Header: FC<PropsType> = memo(({ height = 5 }) => {
         Fire Todo
       </Box>
       <Spacer />
-      {/* <UserMenu signInUser={signInUser} /> */}
+      <HeaderUserMenu />
     </HStack>
   );
 });

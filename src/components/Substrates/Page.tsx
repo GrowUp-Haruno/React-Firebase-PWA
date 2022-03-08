@@ -8,7 +8,7 @@ import { Todo } from '../Modules/Page/Todo';
 
 export const Page: FC = memo(() => {
   /** ヘッダーの高さ */
-  const headerHeight: number = 5;
+  const headerHeight: number = 6;
   const currentUser = useContext(AuthContext);
   return (
     <>
