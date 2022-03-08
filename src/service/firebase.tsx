@@ -27,5 +27,5 @@ export const firebaseFirestore = getFirestore(firebaseApp);
 // // 現在のセッションまたはタブでのみ状態が維持され、ユーザーが認証を受けたタブやウィンドウを閉じるとクリアされることを示します。
 setPersistence(firebaseAuth, browserSessionPersistence);
 
-// export const avatarStorageUrl =
-//   'https://firebasestorage.googleapis.com/v0/b/react-auth-74a37.appspot.com/o/avatar%2F';
+// アバター画像のURL
+export const avatarStorageUrl = process.env.REACT_APP_FIREBASE_AVATAR_STORAGE_URL;

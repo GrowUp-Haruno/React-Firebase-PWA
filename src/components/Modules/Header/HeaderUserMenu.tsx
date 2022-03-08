@@ -3,6 +3,9 @@ import { Menu, MenuButton, MenuItem } from '@chakra-ui/menu';
 import { Button, HStack, MenuDivider, MenuList, useDisclosure } from '@chakra-ui/react';
 import { Avatar } from '@chakra-ui/avatar';
 import { AuthContext } from '../../../providers/AuthProvider';
+import { avatarStorageUrl } from '../../../service/firebase';
+import { AddIcon } from '@chakra-ui/icons';
+import { logout } from '../../../service/firebaseAuthentication';
 // import { AddIcon } from '@chakra-ui/icons';
 // import { useFirebase } from './hooks/useFirebase';
 // import { auth, avatarStorageUrl } from '../../firebase';
@@ -16,6 +19,7 @@ type PropType = {};
 export const HeaderUserMenu: FC<PropType> = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const currentUser = useContext(AuthContext);
+
   return (
     <>
       {currentUser ? (
@@ -26,15 +30,17 @@ export const HeaderUserMenu: FC<PropType> = memo(() => {
                 <Avatar
                   size="md"
                   src={
-                    undefined
-                    // auth.currentUser!.photoURL
-                    //   ? `${avatarStorageUrl}${auth.currentUser!.uid}?alt=media&token=${
-                    //       auth.currentUser!.photoURL
-                    //     }`
-                    //   : undefined
+                    currentUser.photoURL
+                      ? // photoURLがGoogleアカウントのアバター画像URL(https://lh3.googleusercontent.com/)の場合、
+                        currentUser.photoURL.indexOf('https://lh3.googleusercontent.com/') === 0
+                        ? // Googleアカウントのアバター画像を表示
+                          currentUser.photoURL
+                        : // そうでない場合は、ユーザー設定のアバター画像を表示
+                          `${avatarStorageUrl}${currentUser.uid}?alt=media&token=${currentUser.photoURL}`
+                      : // どれにも当てはまらない場合<AddIcon />を表示
+                        undefined
                   }
-                  // icon={<AddIcon />}
-                  // icon={auth.currentUser?.photoURL ? <></> : <AddIcon />}
+                  icon={<AddIcon />}
                 />
               </MenuButton>
               <MenuList>
@@ -44,9 +50,8 @@ export const HeaderUserMenu: FC<PropType> = memo(() => {
                 </MenuItem>
                 <MenuDivider />
                 <MenuItem onClick={onOpen}>プロフィール変更</MenuItem>
-                <MenuItem>Link 2</MenuItem>
                 <MenuDivider />
-                <MenuItem onClick={() => {}}>サインアウト</MenuItem>
+                <MenuItem onClick={logout}>サインアウト</MenuItem>
               </MenuList>
             </Menu>
           </HStack>
