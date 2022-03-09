@@ -6,6 +6,8 @@ import { AuthContext } from '../../../providers/AuthProvider';
 import { avatarStorageUrl } from '../../../service/firebase';
 import { AddIcon } from '@chakra-ui/icons';
 import { logout } from '../../../service/firebaseAuthentication';
+import { HeaderUserMenuModal } from './HeaderUserMenuModal';
+import { HeaderChangeProfile } from './HeaderChangeProfile';
 // import { AddIcon } from '@chakra-ui/icons';
 // import { useFirebase } from './hooks/useFirebase';
 // import { auth, avatarStorageUrl } from '../../firebase';
@@ -56,9 +58,14 @@ export const HeaderUserMenu: FC<PropType> = memo(() => {
             </Menu>
           </HStack>
 
-          {/* <PrimaryModal isOpen={isOpen} onClose={onClose} modalTitle={'ユーザー情報の更新'} size="md">
-          <ChangeProfile signInUser={signInUser} />
-        </PrimaryModal> */}
+          <HeaderUserMenuModal
+            isOpen={isOpen}
+            onClose={onClose}
+            modalTitle={'ユーザー情報の更新'}
+            size="md"
+          >
+            <HeaderChangeProfile />
+          </HeaderUserMenuModal>
         </>
       ) : (
         <></>
