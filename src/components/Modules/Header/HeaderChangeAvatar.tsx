@@ -1,10 +1,10 @@
-import { Avatar, Box, Button, FormLabel, HStack, Input, Stack } from '@chakra-ui/react';
+import { Box, Button, FormLabel, HStack, Input, Stack } from '@chakra-ui/react';
 import { ChangeEventHandler, FC, useCallback, useContext, useState } from 'react';
 import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
 import { AuthContext } from '../../../providers/AuthProvider';
-import { avatarStorageUrl } from '../../../service/firebase';
+import { MyAvatar } from '../../Elements/Avatar/MyAvatar';
 
 // 切り取り範囲の幅と高さ
 const cropSize = 96;
@@ -138,20 +138,7 @@ export const HeaderChangeAvatar: FC = () => {
             <Box color="gray.500" fontSize="sm">
               現在の設定：
             </Box>
-            <Avatar
-              size="md"
-              src={
-                currentUser.photoURL
-                  ? // photoURLがGoogleアカウントのアバター画像URL(https://lh3.googleusercontent.com/)の場合、
-                    currentUser.photoURL.indexOf('https://lh3.googleusercontent.com/') === 0
-                    ? // Googleアカウントのアバター画像を表示
-                      currentUser.photoURL
-                    : // そうでない場合、ユーザー設定のアバター画像を表示
-                      `${avatarStorageUrl}${currentUser.uid}?alt=media&token=${currentUser.photoURL}`
-                  : // どれにも当てはまらない場合<AddIcon />を表示
-                    undefined
-              }
-            />
+            <MyAvatar />
           </HStack>
 
           {imgSrc && (
