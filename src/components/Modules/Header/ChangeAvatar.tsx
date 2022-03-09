@@ -1,5 +1,5 @@
 import { Box, Button, FormLabel, HStack, Input, Stack } from '@chakra-ui/react';
-import { ChangeEventHandler, FC, useCallback, useContext, useState } from 'react';
+import { ChangeEventHandler, FC, memo, useCallback, useContext, useState } from 'react';
 import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
@@ -21,13 +21,17 @@ const cropInitial: Crop = {
   unit: '%',
 };
 
-export const HeaderChangeAvatar: FC = () => {
+type PropType = {
+  setCropImage: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export const ChangeAvatar: FC<PropType> = memo(({ setCropImage }) => {
   const currentUser = useContext(AuthContext);
 
   //  ローカルイメージファイルの読み取り結果(DataUrl(base64))
   const [imgSrc, setImgSrc] = useState<string>('');
   const [image, setImage] = useState<HTMLImageElement>();
-  const [cropImage, setCropImage] = useState<string>('');
+  // const [cropImage, setCropImage] = useState<string>('');
   // 切り取りの各種設定
   const [crop, setCrop] = useState<Crop>(cropInitial);
 
@@ -108,7 +112,7 @@ export const HeaderChangeAvatar: FC = () => {
         console.log(`error: ${e}`);
       }
     }
-  }, [crop.height, crop.width, crop.x, crop.y, image]);
+  }, [crop.height, crop.width, crop.x, crop.y, image, setCropImage]);
 
   return (
     <>
@@ -160,4 +164,4 @@ export const HeaderChangeAvatar: FC = () => {
       )}
     </>
   );
-};
+});
