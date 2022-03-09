@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { Crop } from 'react-image-crop';
 
 // 切り取り範囲の幅と高さ
@@ -13,10 +13,12 @@ const cropInitial: Crop = {
   width: 0,
   height: 0,
   aspect: 1,
-  unit: '%',
+  unit: 'px',
 };
 
-export const useChangeAvatar = (setCropImage: React.Dispatch<React.SetStateAction<string>>) => {
+export const useChangeAvatar = (
+  setCropImage: Dispatch<SetStateAction<string>>
+) => {
   //  ローカルイメージファイルの読み取り結果(DataUrl(base64))
   const [imgSrc, setImgSrc] = useState<string>('');
   const [image, setImage] = useState<HTMLImageElement>();
@@ -65,41 +67,39 @@ export const useChangeAvatar = (setCropImage: React.Dispatch<React.SetStateActio
    * - 抜き出した範囲をDataURIに変換してCropImageステートにセットします
    */
   const RcDragEndHandler = useCallback(() => {
-    if (image !== undefined) {
-      try {
-        // canvasを作成
-        const canvas = document.createElement('canvas');
+    if (image !== undefined && crop.width !== 0) {
+      // canvasを作成
+      const canvas = document.createElement('canvas');
 
-        // 画像の元のサイズとレンダリング時の表示サイズを基に尺度をセット
-        const scaleX = image.naturalWidth / image.width;
-        const scaleY = image.naturalHeight / image.height;
+      // 画像の元のサイズとレンダリング時の表示サイズを基に尺度をセット
+      const scaleX = image.naturalWidth / image.width;
+      const scaleY = image.naturalHeight / image.height;
 
-        // 切り取り範囲の幅と高さをcanvasにセット
-        canvas.width = cropSize;
-        canvas.height = cropSize;
+      // 切り取り範囲の幅と高さをcanvasにセット
+      canvas.width = cropSize;
+      canvas.height = cropSize;
 
-        // canvaに描画するためのコンテキストを取得してctxへセット
-        const ctx = canvas.getContext('2d');
+      // canvaに描画するためのコンテキストを取得してctxへセット
+      const ctx = canvas.getContext('2d');
 
-        // canvasに切り取った画像を描画
-        ctx?.drawImage(
-          image,
-          crop.x * scaleX,
-          crop.y * scaleY,
-          crop.width * scaleX,
-          crop.height * scaleY,
-          0,
-          0,
-          canvas.width,
-          canvas.height
-        );
+      // canvasに切り取った画像を描画
+      ctx?.drawImage(
+        image,
+        crop.x * scaleX,
+        crop.y * scaleY,
+        crop.width * scaleX,
+        crop.height * scaleY,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
 
-        // canvasからbase64(DataURI)へ変換
-        const base64Image = canvas.toDataURL('image/jpeg', toDataUrlQuality);
-        setCropImage(base64Image);
-      } catch (e) {
-        console.log(`error: ${e}`);
-      }
+      // canvasからbase64(DataURI)へ変換
+      const base64Image = canvas.toDataURL('image/jpeg', toDataUrlQuality);
+      setCropImage(base64Image);
+    } else {
+      setCropImage('');
     }
   }, [crop.height, crop.width, crop.x, crop.y, image, setCropImage]);
 

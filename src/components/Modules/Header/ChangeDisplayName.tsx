@@ -5,10 +5,13 @@ import { PrimaryInputText } from '../../Atoms/Input/PrimaryInputText';
 import { useChangeDisplayName } from './hooks/useChangeDisplayName';
 
 //Propsの型定義
-type PropsType = { changeDisplayNameState: [string, React.Dispatch<React.SetStateAction<string>>] };
+type PropsType = {
+  changeDisplayName: string;
+  setChangeDisplayName: React.Dispatch<React.SetStateAction<string>>;
+};
 
 export const ChangeDisplayName: FC<PropsType> = memo(
-  ({ changeDisplayNameState: [changeDisplayName, setChangeDisplayName] }) => {
+  ({ changeDisplayName, setChangeDisplayName, }) => {
     const currentUser = useContext(AuthContext);
 
     const { changeUserProfileHandler } = useChangeDisplayName(setChangeDisplayName);
