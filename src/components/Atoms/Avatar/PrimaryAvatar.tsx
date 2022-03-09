@@ -1,5 +1,5 @@
 import { Avatar, AvatarProps } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { avatarStorageUrl } from '../../../service/firebase';
 
@@ -18,7 +18,7 @@ type PropsType = {
  * @argument { icon } icon: AvatarProps['icon'] - アバター画像が登録されていない場合の代替アイコン(@chakra-ui/icons推奨)
  * - photoURLにGoogleアカウントのアバター画像のURL(https://lh3.googleusercontent.com/)含まれている場合は、そちらを表示する
  */
-export const PrimaryAvatar: FC<PropsType> = ({ uid, photoURL, icon }) => {
+export const PrimaryAvatar: FC<PropsType> = memo(({ uid, photoURL, icon }) => {
   return (
     <Avatar
       size="md"
@@ -36,4 +36,4 @@ export const PrimaryAvatar: FC<PropsType> = ({ uid, photoURL, icon }) => {
       icon={icon}
     />
   );
-};
+});

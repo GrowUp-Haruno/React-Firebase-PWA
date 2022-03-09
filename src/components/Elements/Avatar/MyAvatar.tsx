@@ -1,5 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons';
-import { FC, useContext } from 'react';
+import { FC, memo, useContext } from 'react';
 
 import { AuthContext } from '../../../providers/AuthProvider';
 import { PrimaryAvatar } from '../../Atoms/Avatar/PrimaryAvatar';
@@ -7,7 +7,7 @@ import { PrimaryAvatar } from '../../Atoms/Avatar/PrimaryAvatar';
 /**
  * 自アカウントのアバターをレンダリングします
  */
-export const MyAvatar: FC = () => {
+export const MyAvatar: FC = memo(() => {
   const currentUser = useContext(AuthContext);
 
   if (currentUser && currentUser.photoURL) {
@@ -21,4 +21,4 @@ export const MyAvatar: FC = () => {
       )}
     </>
   );
-};
+});
