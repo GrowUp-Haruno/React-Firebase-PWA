@@ -26,11 +26,11 @@ export const PrimaryAvatar: FC<PropsType> = memo(({ uid, photoURL, icon }) => {
         photoURL
           ? // photoURLがGoogleアカウントのアバター画像URL(https://lh3.googleusercontent.com/)の場合、
             photoURL.indexOf('https://lh3.googleusercontent.com/') === 0
-            ? // Googleアカウントのアバター画像を表示
-              photoURL
+            ? // 設定したiconを表示
+              undefined
             : // そうでない場合は、ユーザー設定のアバター画像を表示
               `${avatarStorageUrl}${uid}?alt=media&token=${photoURL}`
-          : // どれにも当てはまらない場合<AddIcon />を表示
+          : // どれにも当てはまらない場合設定したiconを表示
             undefined
       }
       icon={icon}
