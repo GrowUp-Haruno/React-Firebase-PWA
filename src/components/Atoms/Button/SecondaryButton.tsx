@@ -2,7 +2,16 @@ import { Button, ButtonProps } from '@chakra-ui/react';
 import { FC, memo, useContext } from 'react';
 import { NowBatchCommitContext } from '../../../providers/NowBatchCommitProvider';
 
-export const SecondaryButton: FC<ButtonProps> = memo(
+type PropsType = {
+  onClick?: ButtonProps['onClick'];
+  type?: ButtonProps['type'];
+  leftIcon?: ButtonProps['leftIcon'];
+  variant?: ButtonProps['variant'];
+  isDisabled?: ButtonProps['isDisabled'];
+  loadingText?: ButtonProps['loadingText'];
+};
+
+export const SecondaryButton: FC<PropsType> = memo(
   ({ children, onClick, type, leftIcon, variant, isDisabled, loadingText }) => {
     const { nowBatchCommit } = useContext(NowBatchCommitContext);
 
