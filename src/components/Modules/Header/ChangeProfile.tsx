@@ -6,8 +6,7 @@ import { AuthContext } from '../../../providers/AuthProvider';
 
 type PropType = {};
 
-export const HeaderChangeProfile: FC<PropType> = memo(() => {
-  // const { currentUser, changeUserProfile, changeUserProfileHandler } = useHeaderChangeUserName();
+export const ChangeProfile: FC<PropType> = memo(() => {
   const currentUser = useContext(AuthContext);
 
   const changeDisplayNameState = useState(

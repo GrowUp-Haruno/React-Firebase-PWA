@@ -1,7 +1,8 @@
 import { FormControl, FormHelperText, FormLabel } from '@chakra-ui/react';
-import { FC, memo, useCallback, useContext } from 'react';
+import { FC, memo, useContext } from 'react';
 import { AuthContext } from '../../../providers/AuthProvider';
 import { PrimaryInputText } from '../../Atoms/Input/PrimaryInputText';
+import { useChangeDisplayName } from './hooks/useChangeDisplayName';
 
 //Propsの型定義
 type PropsType = { changeDisplayNameState: [string, React.Dispatch<React.SetStateAction<string>>] };
@@ -10,12 +11,7 @@ export const ChangeDisplayName: FC<PropsType> = memo(
   ({ changeDisplayNameState: [changeDisplayName, setChangeDisplayName] }) => {
     const currentUser = useContext(AuthContext);
 
-    const changeUserProfileHandler = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
-      (event) => {
-        setChangeDisplayName(event.target.value);
-      },
-      [setChangeDisplayName]
-    );
+    const { changeUserProfileHandler } = useChangeDisplayName(setChangeDisplayName);
 
     return (
       <>
