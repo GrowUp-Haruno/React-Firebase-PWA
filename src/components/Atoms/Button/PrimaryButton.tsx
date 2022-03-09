@@ -3,7 +3,7 @@ import { FC, memo, useContext } from 'react';
 import { NowBatchCommitContext } from '../../../providers/NowBatchCommitProvider';
 
 export const PrimaryButton: FC<ButtonProps> = memo(
-  ({ children, onClick, type, leftIcon, variant, isDisabled }) => {
+  ({ children, onClick, type, leftIcon, variant, isDisabled, loadingText }) => {
     const { nowBatchCommit } = useContext(NowBatchCommitContext);
 
     return (
@@ -16,6 +16,7 @@ export const PrimaryButton: FC<ButtonProps> = memo(
         w="full"
         variant={variant}
         leftIcon={leftIcon}
+        loadingText={loadingText}
       >
         {children}
       </Button>
