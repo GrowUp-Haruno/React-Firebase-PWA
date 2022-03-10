@@ -1,6 +1,7 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app';
 import { browserSessionPersistence, getAuth, setPersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 // import { getStorage } from 'firebase/storage';
 // import { getDatabase} from 'firebase/database';
 
@@ -20,7 +21,7 @@ const firebaseConfig: FirebaseOptions = {
 const firebaseApp = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(firebaseApp);
 export const firebaseFirestore = getFirestore(firebaseApp);
-// export const storage = getStorage(app);
+export const storage = getStorage(firebaseApp);
 // export const database = getDatabase(app)
 
 // // 認証の永続性: session
