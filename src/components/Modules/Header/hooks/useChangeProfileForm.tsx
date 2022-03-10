@@ -2,12 +2,14 @@ import { useToast } from '@chakra-ui/react';
 import { FirebaseError } from 'firebase/app';
 import { MouseEventHandler, useCallback, useContext, useMemo, useState } from 'react';
 import { AuthContext } from '../../../../providers/AuthProvider';
+import { CommunicatingContext } from '../../../../providers/CommunicatingProvider';
 import { changeUserProfile } from '../../../../service/firebaseAuthentication';
 import { firebaseErrors } from '../../../../service/firebaseErrors';
 import { uploadImage } from '../../../../service/firebaseStorage';
 
 export const useChangeProfileForm = () => {
   const currentUser = useContext(AuthContext);
+  const { setCommunicating } = useContext(CommunicatingContext);
 
   const [changeDisplayName, setChangeDisplayName] = useState(
     currentUser && currentUser.displayName ? currentUser.displayName : ''
@@ -34,10 +36,14 @@ export const useChangeProfileForm = () => {
     );
   }, [changeDisplayName, cropImage, currentUser?.displayName]);
 
-  // BlobからFirebase Storageへアップロード
+  /**
+   * - Blob(cropImage)をFirebase Storageへアップロード
+   * - ユーザー情報を更新
+   */
   const updateUserProfileHandler = useCallback<MouseEventHandler<HTMLButtonElement>>(
     async (event) => {
       event.preventDefault();
+      setCommunicating(true);
       try {
         if (currentUser) {
           // 画像を切り取っている
@@ -90,10 +96,10 @@ export const useChangeProfileForm = () => {
           console.log(error);
         }
       } finally {
-        // setButtonState(false);
+        setCommunicating(false);
       }
     },
-    [changeDisplayName, cropImage, currentUser, toast]
+    [changeDisplayName, cropImage, currentUser, setCommunicating, toast]
   );
 
   return {
