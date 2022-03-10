@@ -9,10 +9,11 @@ type PropsType = {
   variant?: ButtonProps['variant'];
   isDisabled?: ButtonProps['isDisabled'];
   loadingText?: ButtonProps['loadingText'];
+  as?: ButtonProps['as'];
 };
 
 export const PrimaryButton: FC<PropsType> = memo(
-  ({ children, onClick, type, leftIcon, variant, isDisabled, loadingText }) => {
+  ({ children, onClick, type, leftIcon, variant, isDisabled, loadingText, as }) => {
     const { communicating } = useContext(CommunicatingContext);
 
     return (
@@ -26,6 +27,7 @@ export const PrimaryButton: FC<PropsType> = memo(
         variant={variant}
         leftIcon={leftIcon}
         loadingText={loadingText}
+        as={as}
       >
         {children}
       </Button>
