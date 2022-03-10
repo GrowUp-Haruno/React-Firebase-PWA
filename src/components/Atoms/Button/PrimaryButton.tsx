@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@chakra-ui/react';
 import { FC, memo, useContext } from 'react';
-import { NowBatchCommitContext } from '../../../providers/NowBatchCommitProvider';
+import { CommunicatingContext } from '../../../providers/CommunicatingProvider';
 
 type PropsType = {
   onClick?: ButtonProps['onClick'];
@@ -13,12 +13,12 @@ type PropsType = {
 
 export const PrimaryButton: FC<PropsType> = memo(
   ({ children, onClick, type, leftIcon, variant, isDisabled, loadingText }) => {
-    const { nowBatchCommit } = useContext(NowBatchCommitContext);
+    const { communicating } = useContext(CommunicatingContext);
 
     return (
       <Button
         isDisabled={isDisabled}
-        isLoading={nowBatchCommit}
+        isLoading={communicating}
         onClick={onClick}
         type={type}
         colorScheme="blue"
