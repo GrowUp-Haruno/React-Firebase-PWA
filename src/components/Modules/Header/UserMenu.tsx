@@ -1,17 +1,17 @@
 import { FC, memo, useContext } from 'react';
-import { Menu, MenuButton, MenuItem } from '@chakra-ui/menu';
-import { Button, HStack, MenuDivider, MenuList, useDisclosure } from '@chakra-ui/react';
+import { Menu, MenuItem } from '@chakra-ui/menu';
+import { HStack, MenuDivider, MenuList, useDisclosure } from '@chakra-ui/react';
 
 import { AuthContext } from '../../../providers/AuthProvider';
 import { logout } from '../../../service/firebaseAuthentication';
 import { ChangeProfileForm } from './ChangeProfileForm';
-import { MyAvatar } from '../../Elements/Avatar/MyAvatar';
 import { MediumModal } from '../../Elements/Modal/MediumModal';
+import { MyAvatarMenuButton } from '../../Elements/Menu/MyAvatarMenuButton';
 
 //Propsの型定義
 type PropType = {};
 
-export const HeaderUserMenu: FC<PropType> = memo(() => {
+export const UserMenu: FC<PropType> = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const currentUser = useContext(AuthContext);
   const displayName = currentUser && currentUser.displayName ? currentUser.displayName : '';
@@ -20,9 +20,7 @@ export const HeaderUserMenu: FC<PropType> = memo(() => {
     <>
       <HStack pr="4">
         <Menu>
-          <MenuButton as={Button} cursor={'pointer'} minW={0} rounded={'full'} variant={'link'}>
-            <MyAvatar />
-          </MenuButton>
+          <MyAvatarMenuButton />
           <MenuList>
             <MenuItem>
               Signed in as <br />
