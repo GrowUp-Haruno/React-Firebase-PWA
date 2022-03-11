@@ -16,9 +16,7 @@ const cropInitial: Crop = {
   unit: 'px',
 };
 
-export const useChangeAvatar = (
-  setCropImage: Dispatch<SetStateAction<string>>
-) => {
+export const useChangeAvatar = (setCropImage: Dispatch<SetStateAction<string>>) => {
   //  ローカルイメージファイルの読み取り結果(DataUrl(base64))
   const [imgSrc, setImgSrc] = useState<string>('');
   const [image, setImage] = useState<HTMLImageElement>();

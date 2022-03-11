@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { todoGetDataType } from '../../../../models/todoGetDataType';
 import { PicKey } from '../../../../models/UtilityType';
 import { AuthContext } from '../../../../providers/AuthProvider';
-import { NowBatchCommitContext } from '../../../../providers/NowBatchCommitProvider';
+import { CommunicatingContext } from '../../../../providers/CommunicatingProvider';
 import { batchTodo, fetchTodo } from '../../../../service/firebaseFirestore';
 
 /**
@@ -11,7 +11,7 @@ import { batchTodo, fetchTodo } from '../../../../service/firebaseFirestore';
  */
 export const useTodo = () => {
   const currentUser = useContext(AuthContext);
-  const { setNowBatchCommit } = useContext(NowBatchCommitContext);
+  const { setCommunicating } = useContext(CommunicatingContext);
 
   const [todos, setTodos] = useState<Array<todoGetDataType> | undefined>([]);
   const [updateFlag, setUpdateFlag] = useState<boolean>(false);
@@ -37,7 +37,7 @@ export const useTodo = () => {
       if (batch) {
         try {
           console.log('Firestoreバッチ処理開始');
-          setNowBatchCommit(true);
+          setCommunicating(true);
           await batch.commit();
         } catch (error) {
           console.log('Firestoreバッチ処理エラー');
@@ -46,12 +46,12 @@ export const useTodo = () => {
           console.log('Firestoreバッチ処理完了');
           setTodos(await fetchTodo(currentUser));
           setUpdateFlag(false);
-          setNowBatchCommit(false);
+          setCommunicating(false);
           console.log('Firestore再読み込み完了');
         }
       }
     }
-  }, [currentUser, setNowBatchCommit, todos]);
+  }, [currentUser, setCommunicating, todos]);
 
   // todoの初回読み込み
   useEffect(() => {

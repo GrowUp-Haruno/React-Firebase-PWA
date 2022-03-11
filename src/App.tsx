@@ -1,15 +1,15 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { Page } from './components/Substrates/Page';
 import AuthProvider from './providers/AuthProvider';
-import NowBatchCommitProvider from './providers/NowBatchCommitProvider';
+import { CommunicatingProvider } from './providers/CommunicatingProvider';
 
 function App() {
   return (
     <ChakraProvider>
       <AuthProvider>
-        <NowBatchCommitProvider>
+        <CommunicatingProvider>
           <Page />
-        </NowBatchCommitProvider>
+        </CommunicatingProvider>
       </AuthProvider>
     </ChakraProvider>
   );
