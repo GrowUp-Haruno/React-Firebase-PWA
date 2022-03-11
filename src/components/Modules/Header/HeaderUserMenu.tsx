@@ -4,9 +4,9 @@ import { Button, HStack, MenuDivider, MenuList, useDisclosure } from '@chakra-ui
 
 import { AuthContext } from '../../../providers/AuthProvider';
 import { logout } from '../../../service/firebaseAuthentication';
-import { HeaderUserMenuModal } from './HeaderUserMenuModal';
 import { ChangeProfileForm } from './ChangeProfileForm';
 import { MyAvatar } from '../../Elements/Avatar/MyAvatar';
+import { MediumModal } from '../../Elements/Modal/MediumModal';
 
 //Propsの型定義
 type PropType = {};
@@ -37,14 +37,13 @@ export const HeaderUserMenu: FC<PropType> = memo(() => {
             </Menu>
           </HStack>
 
-          <HeaderUserMenuModal
+          <MediumModal
             isOpen={isOpen}
             onClose={onClose}
             modalTitle={'ユーザー情報の更新'}
-            size="md"
           >
             <ChangeProfileForm />
-          </HeaderUserMenuModal>
+          </MediumModal>
         </>
       ) : (
         <></>
