@@ -1,6 +1,5 @@
-import { Dispatch, SetStateAction, useCallback, useContext, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { Crop } from 'react-image-crop';
-import { CommunicatingContext } from '../../../../providers/CommunicatingProvider';
 
 // 切り取り範囲の幅と高さ
 const cropSize = 96;
@@ -17,11 +16,7 @@ const cropInitial: Crop = {
   unit: 'px',
 };
 
-export const useChangeAvatar = (
-  setCropImage: Dispatch<SetStateAction<string>>
-) => {
-  const { communicating } = useContext(CommunicatingContext);
-  
+export const useChangeAvatar = (setCropImage: Dispatch<SetStateAction<string>>) => {
   //  ローカルイメージファイルの読み取り結果(DataUrl(base64))
   const [imgSrc, setImgSrc] = useState<string>('');
   const [image, setImage] = useState<HTMLImageElement>();
@@ -109,7 +104,6 @@ export const useChangeAvatar = (
   return {
     imgSrc,
     crop,
-    communicating,
     loadImageHandler,
     RcChangeHandler,
     RcDragEndHandler,

@@ -1,11 +1,10 @@
 import { Box, FormLabel, HStack, Stack } from '@chakra-ui/react';
 import { FC, memo, useContext } from 'react';
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 
 import { AuthContext } from '../../../providers/AuthProvider';
 import { MyAvatar } from '../../Elements/Avatar/MyAvatar';
-import { SelectImageButton } from '../../Elements/Button/SelectImageButton';
+import { ImageSelectButton } from '../../Elements/Button/ImageSelectButton';
+import { CropImage } from '../../Elements/Image/CropImage';
 import { useChangeAvatar } from './hooks/useChangeAvatar';
 
 type PropsType = {
@@ -18,7 +17,6 @@ export const ChangeAvatar: FC<PropsType> = memo(({ setCropImage }) => {
   const {
     imgSrc,
     crop,
-    communicating,
     loadImageHandler,
     RcChangeHandler,
     RcDragEndHandler,
@@ -28,32 +26,22 @@ export const ChangeAvatar: FC<PropsType> = memo(({ setCropImage }) => {
   return (
     <>
       {currentUser ? (
-        <Stack>
+        <Stack spacing={4}>
           <FormLabel>アバター設定</FormLabel>
-
-          <SelectImageButton loadImageHandler={loadImageHandler} />
-
+          <ImageSelectButton loadImageHandler={loadImageHandler} />
           <HStack>
             <Box color="gray.500" fontSize="sm">
               現在の設定：
             </Box>
             <MyAvatar />
           </HStack>
-
-          {imgSrc && (
-            <Stack>
-              <ReactCrop
-                src={imgSrc}
-                crop={crop}
-                circularCrop={true}
-                onImageLoaded={RcImageLoadedHandler}
-                onChange={RcChangeHandler}
-                onDragEnd={RcDragEndHandler}
-                disabled={communicating}
-              />
-              {crop.width === 0 && <Box>ドラッグ＆ドロップで範囲を指定してください</Box>}
-            </Stack>
-          )}
+          <CropImage
+            imgSrc={imgSrc}
+            crop={crop}
+            RcImageLoadedHandler={RcImageLoadedHandler}
+            RcChangeHandler={RcChangeHandler}
+            RcDragEndHandler={RcDragEndHandler}
+          />
         </Stack>
       ) : (
         <></>

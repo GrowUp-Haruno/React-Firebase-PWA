@@ -10,7 +10,7 @@ type PropsType = {
 /**
  * 画像選択ウィンドを表示する
  */
-export const SelectImageButton: FC<PropsType> = memo(({ loadImageHandler }) => {
+export const ImageSelectButton: FC<PropsType> = memo(({ loadImageHandler }) => {
   return (
     <PrimaryButton as="label">
       画像を選択
