@@ -17,26 +17,24 @@ export const UserMenu: FC<PropType> = memo(() => {
   const displayName = currentUser && currentUser.displayName ? currentUser.displayName : '';
 
   return (
-    <>
-      <HStack pr="4">
-        <Menu>
-          <MyAvatarMenuButton />
-          <MenuList>
-            <MenuItem>
-              Signed in as <br />
-              {displayName}
-            </MenuItem>
-            <MenuDivider />
-            <MenuItem onClick={onOpen}>プロフィール変更</MenuItem>
-            <MenuDivider />
-            <MenuItem onClick={logout}>サインアウト</MenuItem>
-          </MenuList>
-        </Menu>
-      </HStack>
+    <HStack pr="4">
+      <Menu>
+        <MyAvatarMenuButton />
+        <MenuList>
+          <MenuItem>
+            Signed in as <br />
+            {displayName}
+          </MenuItem>
+          <MenuDivider />
+          <MenuItem onClick={onOpen}>プロフィール変更</MenuItem>
+          <MenuDivider />
+          <MenuItem onClick={logout}>サインアウト</MenuItem>
+        </MenuList>
+      </Menu>
 
       <MediumModal isOpen={isOpen} onClose={onClose} modalTitle={'ユーザー情報の更新'}>
         <ChangeProfileForm />
       </MediumModal>
-    </>
+    </HStack>
   );
 });

@@ -6,6 +6,7 @@ import { CommunicatingContext } from '../../../../providers/CommunicatingProvide
 import { changeUserProfile } from '../../../../service/firebaseAuthentication';
 import { firebaseErrors } from '../../../../service/firebaseErrors';
 import { uploadImage } from '../../../../service/firebaseStorage';
+import { updateLimitCheck } from '../../../../service/updateLimitCheck';
 
 // 更新間隔[分]
 const updateInterval: number = 1;
@@ -30,7 +31,7 @@ export const useChangeProfileForm = () => {
 
   const [cropImage, setCropImage] = useState<string>('');
 
-  const [lastUpdata, setlastUpdata] = useState<lastUpdateType>(InitialLastUpdate);
+  const [lastUpdate, setLastUpdate] = useState<lastUpdateType>(InitialLastUpdate);
   //  各種メッセージの表示コンポーネント
   const toast = useToast({ position: 'top', duration: 5000, isClosable: true });
 
@@ -61,26 +62,13 @@ export const useChangeProfileForm = () => {
 
       try {
         // 短時間の変更回数及び前回の更新時間を確認
-        // 前回の更新から1分超過、または更新回数が1分未満の内に規定回数以下なら更新を許可する
-        const nowTime = new Date().getTime();
-        if (lastUpdata === InitialLastUpdate) {
-          // プロフィール初変更
-          setlastUpdata({ count: 1, time: nowTime });
-        } else {
-          if (
-            lastUpdata.count < numberOfLimits ||
-            lastUpdata.time + updateInterval * 60 * 1000 < nowTime
-          ) {
-            if (lastUpdata.time + updateInterval * 60 * 1000 < nowTime) {
-              setlastUpdata({ count: 1, time: nowTime });
-            } else {
-              setlastUpdata({ count: lastUpdata.count + 1, time: nowTime });
-            }
-          } else {
-            // 更新条件の規定値を超えた場合、FirebaseErrorを返す
-            throw new FirebaseError('changeProfile-error', '');
-          }
-        }
+        updateLimitCheck(
+          lastUpdate,
+          setLastUpdate,
+          numberOfLimits,
+          updateInterval,
+          'changeProfile-error'
+        );
 
         if (currentUser) {
           // 画像を切り取っている
@@ -136,7 +124,7 @@ export const useChangeProfileForm = () => {
         setCommunicating(false);
       }
     },
-    [changeDisplayName, cropImage, currentUser, lastUpdata, setCommunicating, toast]
+    [changeDisplayName, cropImage, currentUser, lastUpdate, setCommunicating, toast]
   );
 
   return {
