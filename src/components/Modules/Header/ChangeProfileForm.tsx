@@ -1,4 +1,4 @@
-import { Divider, Spacer, Stack } from '@chakra-ui/react';
+import { Divider, Stack } from '@chakra-ui/react';
 import { FC, memo } from 'react';
 
 import { ChangeDisplayName } from './ChangeDisplayName';
@@ -11,9 +11,9 @@ type PropType = {};
 export const ChangeProfileForm: FC<PropType> = memo(() => {
   const {
     changeDisplayName,
+    updateFlag,
     setChangeDisplayName,
     setCropImage,
-    updateFlag,
     updateUserProfileHandler,
   } = useChangeProfileForm();
 
@@ -23,7 +23,6 @@ export const ChangeProfileForm: FC<PropType> = memo(() => {
         changeDisplayName={changeDisplayName}
         setChangeDisplayName={setChangeDisplayName}
       />
-      <Spacer />
       <ChangeAvatar setCropImage={setCropImage} />
       <Divider />
       <UpdateButton isDisabled={updateFlag} onClick={updateUserProfileHandler} />

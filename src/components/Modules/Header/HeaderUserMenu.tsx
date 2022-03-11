@@ -14,40 +14,31 @@ type PropType = {};
 export const HeaderUserMenu: FC<PropType> = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const currentUser = useContext(AuthContext);
+  const displayName = currentUser && currentUser.displayName ? currentUser.displayName : '';
 
   return (
     <>
-      {currentUser ? (
-        <>
-          <HStack pr="4">
-            <Menu>
-              <MenuButton as={Button} cursor={'pointer'} minW={0} rounded={'full'} variant={'link'}>
-                <MyAvatar />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>
-                  Signed in as <br />
-                  {currentUser.displayName}
-                </MenuItem>
-                <MenuDivider />
-                <MenuItem onClick={onOpen}>プロフィール変更</MenuItem>
-                <MenuDivider />
-                <MenuItem onClick={logout}>サインアウト</MenuItem>
-              </MenuList>
-            </Menu>
-          </HStack>
+      <HStack pr="4">
+        <Menu>
+          <MenuButton as={Button} cursor={'pointer'} minW={0} rounded={'full'} variant={'link'}>
+            <MyAvatar />
+          </MenuButton>
+          <MenuList>
+            <MenuItem>
+              Signed in as <br />
+              {displayName}
+            </MenuItem>
+            <MenuDivider />
+            <MenuItem onClick={onOpen}>プロフィール変更</MenuItem>
+            <MenuDivider />
+            <MenuItem onClick={logout}>サインアウト</MenuItem>
+          </MenuList>
+        </Menu>
+      </HStack>
 
-          <MediumModal
-            isOpen={isOpen}
-            onClose={onClose}
-            modalTitle={'ユーザー情報の更新'}
-          >
-            <ChangeProfileForm />
-          </MediumModal>
-        </>
-      ) : (
-        <></>
-      )}
+      <MediumModal isOpen={isOpen} onClose={onClose} modalTitle={'ユーザー情報の更新'}>
+        <ChangeProfileForm />
+      </MediumModal>
     </>
   );
 });
