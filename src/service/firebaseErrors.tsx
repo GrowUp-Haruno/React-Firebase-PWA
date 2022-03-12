@@ -1,4 +1,4 @@
-import { firebaseErrorsType } from "../models/firebaseErrorsType";
+import { firebaseErrorsType } from '../models/firebaseErrorsType';
 
 export const firebaseErrors: firebaseErrorsType = {
   'auth/user-not-found': {
@@ -30,8 +30,12 @@ export const firebaseErrors: firebaseErrorsType = {
     description: '予期しないエラーが発生しました。',
   },
   'changeProfile-error': {
-    title: 'プロフィール変更制限',
-    description: 'プロフィール変更制限中です。１分後、再試行してください。',
+    title: 'プロフィールの変更制限',
+    description: 'プロフィール変更制限中です。1分ほど時間をあけてから、再試行してください。',
+  },
+  'updateToDo-error': {
+    title: 'ToDoの変更制限',
+    description: 'ToDoの変更制限中です。1分ほど時間をあけてから、再試行してください。',
   },
   'auth/network-request-failed': {
     title: 'ネットワークエラー',

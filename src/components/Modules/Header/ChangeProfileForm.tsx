@@ -6,9 +6,7 @@ import { ChangeAvatar } from './ChangeAvatar';
 import { UpdateButton } from '../../Elements/Button/UpdateButton';
 import { useChangeProfileForm } from './hooks/useChangeProfileForm';
 
-type PropType = {};
-
-export const ChangeProfileForm: FC<PropType> = memo(() => {
+export const ChangeProfileForm: FC = memo(() => {
   const {
     changeDisplayName,
     updateFlag,
