@@ -3,6 +3,7 @@ import { FirebaseError } from 'firebase/app';
 import { MouseEventHandler, useCallback, useContext, useMemo, useState } from 'react';
 import { AuthContext } from '../../../../providers/AuthProvider';
 import { CommunicatingContext } from '../../../../providers/CommunicatingProvider';
+import { LastUpdateContext } from '../../../../providers/LastUpdateProvider';
 import { changeUserProfile } from '../../../../service/firebaseAuthentication';
 import { firebaseErrors } from '../../../../service/firebaseErrors';
 import { uploadImage } from '../../../../service/firebaseStorage';
@@ -14,15 +15,10 @@ const updateInterval: number = 1;
 // 連続更新の制限回数
 const numberOfLimits: number = 3;
 
-const InitialLastUpdate = {
-  count: 0,
-  time: 0,
-};
-
-type lastUpdateType = { count: number; time: number };
-
 export const useChangeProfileForm = () => {
   const currentUser = useContext(AuthContext);
+  const { lastUpdate, setLastUpdate } = useContext(LastUpdateContext);
+
   const { setCommunicating } = useContext(CommunicatingContext);
 
   const [changeDisplayName, setChangeDisplayName] = useState(
@@ -31,7 +27,6 @@ export const useChangeProfileForm = () => {
 
   const [cropImage, setCropImage] = useState<string>('');
 
-  const [lastUpdate, setLastUpdate] = useState<lastUpdateType>(InitialLastUpdate);
   //  各種メッセージの表示コンポーネント
   const toast = useToast({ position: 'top', duration: 5000, isClosable: true });
 
@@ -65,6 +60,7 @@ export const useChangeProfileForm = () => {
         updateLimitCheck(
           lastUpdate,
           setLastUpdate,
+          'changeProfile',
           numberOfLimits,
           updateInterval,
           'changeProfile-error'
@@ -124,7 +120,7 @@ export const useChangeProfileForm = () => {
         setCommunicating(false);
       }
     },
-    [changeDisplayName, cropImage, currentUser, lastUpdate, setCommunicating, toast]
+    [changeDisplayName, cropImage, currentUser, lastUpdate, setCommunicating, setLastUpdate, toast]
   );
 
   return {

@@ -8,10 +8,7 @@ import { ChangeProfileForm } from './ChangeProfileForm';
 import { MediumModal } from '../../Elements/Modal/MediumModal';
 import { MyAvatarMenuButton } from '../../Elements/Menu/MyAvatarMenuButton';
 
-//Propsの型定義
-type PropType = {};
-
-export const UserMenu: FC<PropType> = memo(() => {
+export const UserMenu: FC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const currentUser = useContext(AuthContext);
   const displayName = currentUser && currentUser.displayName ? currentUser.displayName : '';
