@@ -1,6 +1,6 @@
-import { useToast } from '@chakra-ui/react';
+import { ToastId, useToast } from '@chakra-ui/react';
 import { FirebaseError } from 'firebase/app';
-import { MouseEventHandler, useCallback, useContext, useMemo, useState } from 'react';
+import { MouseEventHandler, useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { AuthContext } from '../../../../providers/AuthProvider';
 import { CommunicatingContext } from '../../../../providers/CommunicatingProvider';
 import { LastUpdateContext } from '../../../../providers/LastUpdateProvider';
@@ -28,7 +28,8 @@ export const useChangeProfileForm = () => {
   const [cropImage, setCropImage] = useState<string>('');
 
   //  各種メッセージの表示コンポーネント
-  const toast = useToast({ position: 'top', duration: 5000, isClosable: true });
+  const toast = useToast({ position: 'top', duration: 2000, isClosable: true });
+  const toastIdRef = useRef<ToastId | undefined>();
 
   /**
    * - false
@@ -87,26 +88,36 @@ export const useChangeProfileForm = () => {
             });
           }
 
+          // 既にtoastが出ている場合はこれをを削除
+          if (toastIdRef.current) {
+            toast.close(toastIdRef.current);
+          }
+
           // 完了メッセージを表示
-          toast({
+          toastIdRef.current = toast({
             title: '変更完了',
             description: 'プロフィールの変更が完了しました！',
             status: 'success',
           });
         }
       } catch (error) {
+        // 既にtoastが出ている場合はこれをを削除
+        if (toastIdRef.current) {
+          toast.close(toastIdRef.current);
+        }
+        
         if (error instanceof FirebaseError) {
           // エラーメッセージを表示
           if (firebaseErrors[`${error.code}`] !== undefined) {
             // Firebaseの非同期APIのエラーを表示
-            toast({
+            toastIdRef.current = toast({
               title: firebaseErrors[`${error.code}`].title,
               description: firebaseErrors[`${error.code}`].description,
               status: 'error',
             });
           } else {
             // firebaseErrorsに登録されていないエラーコードが入っていた場合
-            toast({
+            toastIdRef.current = toast({
               title: '予期しないエラー',
               description: `予期しないエラーが発生しました:${error.code}`,
               status: 'error',

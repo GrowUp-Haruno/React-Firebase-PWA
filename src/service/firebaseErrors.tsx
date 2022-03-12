@@ -31,7 +31,7 @@ export const firebaseErrors: firebaseErrorsType = {
   },
   'changeProfile-error': {
     title: 'プロフィール変更制限',
-    description: 'プロフィール変更制限中です。１分後、再試行してください。',
+    description: 'プロフィール変更制限中です。1分ほど時間をあけてから、再試行してください。',
   },
   'auth/network-request-failed': {
     title: 'ネットワークエラー',
