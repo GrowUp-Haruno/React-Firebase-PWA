@@ -1,5 +1,6 @@
 import { FirebaseError } from 'firebase/app';
 import { Dispatch, SetStateAction } from 'react';
+import { firebaseErrorCodeType } from '../models/firebaseErrorsType';
 import {
   InitialLastUpdate,
   lastUpdatekeyType,
@@ -10,7 +11,7 @@ import {
  * 短時間の変更回数及び前回の更新時間を確認
  * - 前回の更新から1分超過、または更新回数が1分未満の内に規定回数以下なら更新を許可
  * - それ以外の場合はカスタムFirebaseErrorを返す
- * @example updateLimitCheck(lastUpdate, setLastUpdate, numberOfLimits, updateInterval)
+ * @example updateLimitCheck(lastUpdate, setLastUpdate, '', numberOfLimits, updateInterval, '')
  */
 export const updateLimitCheck = (
   lastUpdate: lastUpdateType,
@@ -18,7 +19,7 @@ export const updateLimitCheck = (
   lastUpdatekey: lastUpdatekeyType,
   numberOfLimits: number,
   updateInterval: number,
-  firebaseErrorCode: 'changeProfile-error'
+  firebaseErrorCode: firebaseErrorCodeType
 ) => {
   const nowTime = new Date().getTime();
   if (lastUpdate[lastUpdatekey] === InitialLastUpdate[lastUpdatekey]) {

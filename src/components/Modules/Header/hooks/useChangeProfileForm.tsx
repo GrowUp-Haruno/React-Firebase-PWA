@@ -108,11 +108,11 @@ export const useChangeProfileForm = () => {
         
         if (error instanceof FirebaseError) {
           // エラーメッセージを表示
-          if (firebaseErrors[`${error.code}`] !== undefined) {
+          if (firebaseErrors[error.code] !== undefined) {
             // Firebaseの非同期APIのエラーを表示
             toastIdRef.current = toast({
-              title: firebaseErrors[`${error.code}`].title,
-              description: firebaseErrors[`${error.code}`].description,
+              title: firebaseErrors[error.code].title,
+              description: firebaseErrors[error.code].description,
               status: 'error',
             });
           } else {
