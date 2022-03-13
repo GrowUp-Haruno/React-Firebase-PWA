@@ -1,3 +1,3 @@
 {
-  "githubIssues.issueBranchTitle": "${user}/issue18-issue72-issue${issueNumber}"
+  "githubIssues.issueBranchTitle": "${user}/issue${issueNumber}"
 }
