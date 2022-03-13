@@ -1,9 +1,20 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { ToastId, useToast } from '@chakra-ui/react';
+import { FirebaseError } from 'firebase/app';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { todoGetDataType } from '../../../../models/todoGetDataType';
 import { PicKey } from '../../../../models/UtilityType';
 import { AuthContext } from '../../../../providers/AuthProvider';
-import { NowBatchCommitContext } from '../../../../providers/NowBatchCommitProvider';
+import { CommunicatingContext } from '../../../../providers/CommunicatingProvider';
+import { LastUpdateContext } from '../../../../providers/LastUpdateProvider';
+import { firebaseErrors } from '../../../../service/firebaseErrors';
 import { batchTodo, fetchTodo } from '../../../../service/firebaseFirestore';
+import { updateLimitCheck } from '../../../../service/updateLimitCheck';
+
+// 更新間隔[分]
+const updateInterval: number = 1;
+
+// 連続更新の制限回数
+const numberOfLimits: number = 3;
 
 /**
  * useTodoカスタムフック
@@ -11,10 +22,15 @@ import { batchTodo, fetchTodo } from '../../../../service/firebaseFirestore';
  */
 export const useTodo = () => {
   const currentUser = useContext(AuthContext);
-  const { setNowBatchCommit } = useContext(NowBatchCommitContext);
+  const { setCommunicating } = useContext(CommunicatingContext);
+  const { lastUpdate, setLastUpdate } = useContext(LastUpdateContext);
 
   const [todos, setTodos] = useState<Array<todoGetDataType> | undefined>([]);
   const [updateFlag, setUpdateFlag] = useState<boolean>(false);
+
+  //  各種メッセージの表示コンポーネント
+  const toast = useToast({ position: 'top', duration: 2000, isClosable: true });
+  const toastIdRef = useRef<ToastId | undefined>();
 
   // isCmpleteの論理を反転
   const checkBoxChangeHandler = useCallback(
@@ -36,29 +52,76 @@ export const useTodo = () => {
       const batch = batchTodo(currentUser, todos);
       if (batch) {
         try {
+          updateLimitCheck(
+            lastUpdate,
+            setLastUpdate,
+            'updateToDo',
+            numberOfLimits,
+            updateInterval,
+            'updateToDo-error'
+          );
+
           console.log('Firestoreバッチ処理開始');
-          setNowBatchCommit(true);
+          setCommunicating(true);
           await batch.commit();
-        } catch (error) {
-          console.log('Firestoreバッチ処理エラー');
-          console.log(error);
-        } finally {
-          console.log('Firestoreバッチ処理完了');
+        
           setTodos(await fetchTodo(currentUser));
           setUpdateFlag(false);
-          setNowBatchCommit(false);
+
+          // 既にtoastが出ている場合はこれをを削除
+          if (toastIdRef.current) {
+            toast.close(toastIdRef.current);
+          }
+          
+          // 完了メッセージを表示
+          toastIdRef.current = toast({
+            title: '変更完了',
+            description: 'ToDoの更新が完了しました！',
+            status: 'success',
+          });
+        } catch (error) {
+          // 既にtoastが出ている場合はこれをを削除
+          if (toastIdRef.current) {
+            toast.close(toastIdRef.current);
+          }
+
+          if (error instanceof FirebaseError) {
+            // エラーメッセージを表示
+            if (firebaseErrors[error.code] !== undefined) {
+              // Firebaseの非同期APIのエラーを表示
+              toastIdRef.current = toast({
+                title: firebaseErrors[error.code].title,
+                description: firebaseErrors[error.code].description,
+                status: 'error',
+              });
+            } else {
+              // firebaseErrorsに登録されていないエラーコードが入っていた場合
+              toastIdRef.current = toast({
+                title: '予期しないエラー',
+                description: `予期しないエラーが発生しました:${error.code}`,
+                status: 'error',
+              });
+            }
+          } else {
+            // その他の非同期関数のエラー表示
+            console.log(error);
+          }
+        } finally {
+          console.log('Firestoreバッチ処理完了');
+
+          setCommunicating(false);
           console.log('Firestore再読み込み完了');
         }
       }
     }
-  }, [currentUser, setNowBatchCommit, todos]);
+  }, [currentUser, lastUpdate, setCommunicating, setLastUpdate, toast, todos]);
 
   // todoの初回読み込み
   useEffect(() => {
     (async () => {
-      console.log('開始')
+      console.log('開始');
       setTodos(await fetchTodo(currentUser));
-      console.log('完了')
+      console.log('完了');
     })();
     return () => {
       setTodos([]);

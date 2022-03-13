@@ -1,6 +1,6 @@
 import { IconButton, IconButtonProps } from '@chakra-ui/react';
 import { FC, memo, useContext } from 'react';
-import { NowBatchCommitContext } from '../../../providers/NowBatchCommitProvider';
+import { CommunicatingContext } from '../../../providers/CommunicatingProvider';
 
 //Propsの型定義
 type PropsType = {
@@ -13,12 +13,12 @@ type PropsType = {
 
 export const PrimaryIconButton: FC<PropsType> = memo(
   ({ onClick, variant, icon, colorScheme, ariaLabel }) => {
-    const { nowBatchCommit } = useContext(NowBatchCommitContext);
+    const { communicating } = useContext(CommunicatingContext);
 
     return (
       <IconButton
         size="sm"
-        isDisabled={nowBatchCommit}
+        isDisabled={communicating}
         colorScheme={colorScheme}
         icon={icon}
         onClick={onClick}
