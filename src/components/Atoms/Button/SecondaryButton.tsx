@@ -12,8 +12,8 @@ type PropsType = {
   as?: ButtonProps['as'];
 };
 
-export const PrimaryButton: FC<PropsType> = memo(
-  ({ children, onClick, type, leftIcon, variant, isDisabled, loadingText, as }) => {
+export const SecondaryButton: FC<PropsType> = memo(
+  ({ children, onClick, type, leftIcon, variant, isDisabled, loadingText ,as}) => {
     const { communicating } = useContext(CommunicatingContext);
 
     return (
@@ -22,7 +22,7 @@ export const PrimaryButton: FC<PropsType> = memo(
         isLoading={communicating}
         onClick={onClick}
         type={type}
-        colorScheme="blue"
+        colorScheme="green"
         w="full"
         variant={variant}
         leftIcon={leftIcon}

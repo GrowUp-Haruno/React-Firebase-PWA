@@ -1,13 +1,18 @@
-import { FC, InputHTMLAttributes, memo, useContext } from 'react';
-import { NowBatchCommitContext } from '../../../providers/NowBatchCommitProvider';
+import { Input, InputProps } from '@chakra-ui/react';
+import { FC, memo, useContext } from 'react';
+import { CommunicatingContext } from '../../../providers/CommunicatingProvider';
 
 //Propsの型定義
-type PropsType = {} & InputHTMLAttributes<HTMLInputElement>;
+type PropsType = {
+  placeholder: InputProps['placeholder'];
+  value: InputProps['value'];
+  onChange: InputProps['onChange'];
+};
 
-const PrimaryInputText: FC<PropsType> = memo(({ ...attr }) => {
-  const { nowBatchCommit } = useContext(NowBatchCommitContext);
-  
-  return <input {...attr} disabled={nowBatchCommit} />;
+export const PrimaryInputText: FC<PropsType> = memo(({ placeholder, value, onChange }) => {
+  const { communicating } = useContext(CommunicatingContext);
+
+  return (
+    <Input disabled={communicating} placeholder={placeholder} value={value} onChange={onChange} />
+  );
 });
-
-export default PrimaryInputText;

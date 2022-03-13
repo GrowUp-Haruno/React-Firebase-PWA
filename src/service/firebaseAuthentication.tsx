@@ -1,6 +1,15 @@
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from '@firebase/auth';
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  updateCurrentUser,
+  updateProfile,
+  User,
+} from '@firebase/auth';
 import { FirebaseError } from '@firebase/util';
+import { onIdTokenChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
+import { UserProfileType } from '../models/ChangeUserProfileType';
 import { currentUserTyep } from '../types/currentUserTyep';
 import { firebaseAuth } from './firebase';
 
@@ -11,7 +20,10 @@ export const useAuthentication = () => {
   const [currentUser, setCurrentUser] = useState<currentUserTyep>();
 
   useEffect(() => {
-    const Unsubscribe = onAuthStateChanged(firebaseAuth, (user) => setCurrentUser(user));
+    const Unsubscribe = onIdTokenChanged(firebaseAuth, (user) => {
+      console.log('ユーザーを取得');
+      setCurrentUser(user);
+    });
 
     return () => {
       Unsubscribe();
@@ -26,8 +38,8 @@ export const useAuthentication = () => {
 const googleProvider = new GoogleAuthProvider();
 export const signInWithGoogle = () => {
   signInWithPopup(firebaseAuth, googleProvider)
-    .then((res) => {
-      console.log(res.user);
+    .then(() => {
+      console.log('認証成功');
     })
     .catch((error: FirebaseError) => {
       console.log(error.message);
@@ -46,4 +58,21 @@ export const logout = () => {
     .catch((error: FirebaseError) => {
       console.log(error.message);
     });
+};
+
+/**
+ * ユーザープロファイル更新
+ */
+export const changeUserProfile = async (currentUser: User, userProfile: UserProfileType) => {
+  try {
+    // プロフィール更新
+    await updateProfile(currentUser, {
+      displayName: `${userProfile.displayName}`,
+      photoURL: `${userProfile.photoURL}`,
+    });
+
+    await updateCurrentUser(firebaseAuth, firebaseAuth.currentUser);
+  } catch (error) {
+    throw error;
+  }
 };
