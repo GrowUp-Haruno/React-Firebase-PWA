@@ -64,7 +64,7 @@ export const useTodo = () => {
           console.log('Firestoreバッチ処理開始');
           setCommunicating(true);
           await batch.commit();
-        
+
           setTodos(await fetchTodo(currentUser));
           setUpdateFlag(false);
 
@@ -72,7 +72,7 @@ export const useTodo = () => {
           if (toastIdRef.current) {
             toast.close(toastIdRef.current);
           }
-          
+
           // 完了メッセージを表示
           toastIdRef.current = toast({
             title: '変更完了',
@@ -119,10 +119,9 @@ export const useTodo = () => {
   // todoの初回読み込み
   useEffect(() => {
     (async () => {
-      console.log('開始');
       setTodos(await fetchTodo(currentUser));
-      console.log('完了');
     })();
+
     return () => {
       setTodos([]);
       setUpdateFlag(false);

@@ -21,7 +21,7 @@ export const ChangeAvatar: FC<PropsType> = memo(({ setCropImage }) => {
   } = useChangeAvatar(setCropImage);
 
   return (
-    <Stack spacing={4}>
+    <Stack spacing={2}>
       <FormLabel>アバター設定</FormLabel>
       <ImageSelectButton loadImageHandler={loadImageHandler} />
       <HStack>

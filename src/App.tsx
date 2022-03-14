@@ -3,16 +3,19 @@ import { Page } from './components/Substrates/Page';
 import { AuthProvider } from './providers/AuthProvider';
 import { CommunicatingProvider } from './providers/CommunicatingProvider';
 import { LastUpdateProvider } from './providers/LastUpdateProvider';
+import { NetworkStatusProvider } from './providers/NetworkStatusProvider';
 
 function App() {
   return (
     <ChakraProvider>
       <AuthProvider>
-        <CommunicatingProvider>
-          <LastUpdateProvider>
-            <Page />
-          </LastUpdateProvider>
-        </CommunicatingProvider>
+        <NetworkStatusProvider>
+          <CommunicatingProvider>
+            <LastUpdateProvider>
+              <Page />
+            </LastUpdateProvider>
+          </CommunicatingProvider>
+        </NetworkStatusProvider>
       </AuthProvider>
     </ChakraProvider>
   );
