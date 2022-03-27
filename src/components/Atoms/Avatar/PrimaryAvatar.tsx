@@ -16,7 +16,7 @@ type PropsType = {
  * @argument { uid } uid: string - ユーザーID
  * @argument { photoURL } photoURL: string - アバター画像のURL
  * @argument { icon } icon: AvatarProps['icon'] - アバター画像が登録されていない場合の代替アイコン(@chakra-ui/icons推奨)
- * - photoURLにGoogleアカウントのアバター画像のURL(https://lh3.googleusercontent.com/)含まれている場合は、そちらを表示する
+ * - photoURLにGoogleアカウントのアバター画像のURL(https://lh3.googleusercontent.com/)含まれている場合は、Avatarデフォルト
  */
 export const PrimaryAvatar: FC<PropsType> = memo(({ uid, photoURL, icon }) => {
   return (
@@ -34,6 +34,7 @@ export const PrimaryAvatar: FC<PropsType> = memo(({ uid, photoURL, icon }) => {
             undefined
       }
       icon={icon}
+      data-testid='PrimaryAvatar'
     />
   );
 });
