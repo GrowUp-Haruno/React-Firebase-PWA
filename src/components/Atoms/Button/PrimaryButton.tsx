@@ -28,6 +28,7 @@ export const PrimaryButton: FC<PropsType> = memo(
         leftIcon={leftIcon}
         loadingText={loadingText}
         as={as}
+        data-testid="PrimaryButton"
       >
         {children}
       </Button>
