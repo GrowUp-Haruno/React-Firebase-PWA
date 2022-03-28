@@ -34,18 +34,35 @@
 //     );
 //   }
 // );
+
 import { ChakraProvider } from '@chakra-ui/react';
 import { render, screen } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react-hooks';
+import '@testing-library/jest-dom';
 import { PrimaryButton } from './PrimaryButton';
+import { CommunicatingContext } from '../../../providers/CommunicatingProvider';
+import { useState } from 'react';
+import userEvent from '@testing-library/user-event';
 
 describe('PrimaryAvatar', () => {
   it('No Props', () => {
-    render(
-      <ChakraProvider>
-        <PrimaryButton />
-      </ChakraProvider>
-    );
+    render(<PrimaryButton />);
     const testComponent = screen.getByTestId('PrimaryButton');
     expect(testComponent).toBeTruthy();
+  });
+  it('comunicating context is false', async() => {
+    const [ communicating, setCommunicating ] = renderHook(() => useState<boolean>(false));
+    render(
+      <ChakraProvider>
+        <CommunicatingContext.Provider value={{communicating, setCommunicating}}>
+          <PrimaryButton onClick={()=>{setCommunicating(true)}}/>
+        </CommunicatingContext.Provider>
+      </ChakraProvider>
+    );
+    const button = screen.getByTestId('PrimaryButton');
+    userEvent.click(button);
+    await screen.findByTestId('PrimaryButton');
+    screen.debug()
+    // expect(testComponent).toHaveTextContent('ロード中です');
   });
 });
