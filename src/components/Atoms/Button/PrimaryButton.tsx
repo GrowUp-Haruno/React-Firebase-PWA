@@ -15,7 +15,7 @@ type PropsType = {
 export const PrimaryButton: FC<PropsType> = memo(
   ({ children, onClick, type, leftIcon, variant, isDisabled, loadingText, as }) => {
     const { communicating } = useContext(CommunicatingContext);
-
+    console.log(communicating);
     return (
       <Button
         isDisabled={isDisabled}
